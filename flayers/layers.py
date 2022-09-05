@@ -11,7 +11,7 @@ import tensorflow as tf
 def cast_all(*args, dtype=tf.float32):
     return [tf.cast(arg, dtype=dtype) for arg in args]
 
-# %% ../00_layers.ipynb 12
+# %% ../00_layers.ipynb 11
 @tf.function
 def gabor_2d_tf(i, # Horizontal domain
                 j, # Vertical domain
@@ -41,7 +41,7 @@ def gabor_2d_tf(i, # Horizontal domain
 
     return gabor
 
-# %% ../00_layers.ipynb 13
+# %% ../00_layers.ipynb 12
 @tf.function
 def create_gabor_rot_tf(Nrows, # Number of horizontal pixels
                         Ncols, # Number of vertical pixels
@@ -74,7 +74,7 @@ def create_gabor_rot_tf(Nrows, # Number of horizontal pixels
 
     return gabor_2d_tf(x_r, y_r, imean = imean, jmean = jmean, sigma_i = sigma_i, sigma_j = sigma_j, freq = freq, theta = theta, sigma_theta = sigma_theta)
 
-# %% ../00_layers.ipynb 17
+# %% ../00_layers.ipynb 16
 @tf.function
 def create_multiple_different_rot_gabor_tf(n_gabors, # Number of Gabor filters we want to create.
                                            Nrows, # Number of horizontal pixels.

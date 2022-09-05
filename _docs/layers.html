@@ -172,6 +172,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">flayers</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  00_core.ipynb
+  </li>
+    </ul>
+    </div>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -227,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="managing-dtype" class="level2">
 <h2 class="anchored" data-anchor-id="managing-dtype">Managing <code>dtype</code></h2>
 <p><code>Tensorflow</code> is a bit picky when it comes to <code>dtype</code>, so it can be useful to define a function that will ensure that every parameter is casted to the same <code>dtype</code>:</p>
-<div class="cell">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>a, b <span class="op">=</span> tf.convert_to_tensor(<span class="dv">1</span>), tf.convert_to_tensor(<span class="fl">1.1</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a.dtype, b.dtype)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># assert a.dtype != b.dtype</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -235,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>&lt;dtype: 'int32'&gt; &lt;dtype: 'float32'&gt;</code></pre>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>c, d <span class="op">=</span> cast_all(a, b)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(c.dtype, d.dtype)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> c.dtype <span class="op">==</span> d.dtype</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -363,12 +375,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="cell">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gabor <span class="op">=</span> create_gabor_rot_tf(Nrows<span class="op">=</span><span class="dv">20</span>, Ncols<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span><span class="fl">0.1</span>, sigma_j<span class="op">=</span><span class="fl">0.1</span>, freq<span class="op">=</span><span class="dv">10</span>, theta<span class="op">=</span><span class="dv">0</span>, rot_theta<span class="op">=</span><span class="dv">0</span>, sigma_theta<span class="op">=</span><span class="dv">0</span>, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(gabor)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="00_layers_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<p><img src="00_layers_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -461,7 +473,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="cell">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>n_gabors <span class="op">=</span> <span class="dv">4</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gabors <span class="op">=</span> create_multiple_different_rot_gabor_tf(n_gabors<span class="op">=</span>n_gabors, Nrows<span class="op">=</span><span class="dv">20</span>, Ncols<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>[<span class="fl">0.1</span>]<span class="op">*</span>n_gabors, sigma_j<span class="op">=</span>[<span class="fl">0.1</span>]<span class="op">*</span>n_gabors, freq<span class="op">=</span>[<span class="dv">10</span>]<span class="op">*</span>n_gabors, </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, rot_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, sigma_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, fs<span class="op">=</span><span class="dv">20</span>)</span>
@@ -473,17 +485,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>TensorShape([4, 20, 20])</code></pre>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gabor_filter, ax <span class="kw">in</span> <span class="bu">zip</span>(gabors, axes.ravel()):</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(gabor_filter)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="00_layers_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<p><img src="00_layers_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We can, as well, change the parameters of the Gabor filters independently:</p>
-<div class="cell">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>n_gabors <span class="op">=</span> <span class="dv">4</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>sigma_i <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>]</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sigma_j <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>]</span>
@@ -498,13 +510,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>TensorShape([4, 20, 20])</code></pre>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-vscode="{&quot;languageId&quot;:&quot;python&quot;}">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gabor_filter, ax <span class="kw">in</span> <span class="bu">zip</span>(gabors, axes.ravel()):</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(gabor_filter)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="00_layers_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+<p><img src="00_layers_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 
