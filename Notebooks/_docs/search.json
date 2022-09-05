@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "layers.html",
+    "href": "layers.html",
+    "title": "Layers",
+    "section": "",
+    "text": "Convolutional layer that forces a functional Gabor form for its filters. Every parameter of the Gabor can be learnt."
+  },
+  {
+    "objectID": "layers.html#managing-dtype",
+    "href": "layers.html#managing-dtype",
+    "title": "Layers",
+    "section": "Managing dtype",
+    "text": "Managing dtype\nTensorflow is a bit picky when it comes to dtype, so it can be useful to define a function that will ensure that every parameter is casted to the same dtype:\n\na, b = tf.convert_to_tensor(1), tf.convert_to_tensor(1.1)\nprint(a.dtype, b.dtype)\n# assert a.dtype != b.dtype\n\n<dtype: 'int32'>Metal device set to: Apple M1 Pro\n\nsystemMemory: 16.00 GB\nmaxCacheSize: 5.33 GB\n\n <dtype: 'float32'>\n\n\n2022-09-05 12:12:09.182081: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:305] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.\n2022-09-05 12:12:09.182479: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:271] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -> physical PluggableDevice (device: 0, name: METAL, pci bus id: <undefined>)\n\n\n\nc, d = cast_all(a, b)\nprint(c.dtype, d.dtype)\nassert c.dtype == d.dtype\n\n<dtype: 'float32'> <dtype: 'float32'>"
+  },
+  {
+    "objectID": "layers.html#creating-a-gabor-filter-in-tensorflow",
+    "href": "layers.html#creating-a-gabor-filter-in-tensorflow",
+    "title": "Layers",
+    "section": "Creating a Gabor filter in TensorFlow",
+    "text": "Creating a Gabor filter in TensorFlow\nFirst of all we need to be able to generate Gabor filters as Tensorflow Tensor:\n\n\ngabor_2d_tf\n\n gabor_2d_tf (i, j, imean, jmean, sigma_i, sigma_j, freq, theta,\n              sigma_theta)\n\n\n\n\n\nDetails\n\n\n\n\ni\nHorizontal domain\n\n\nj\nVertical domain\n\n\nimean\nHorizontal mean\n\n\njmean\nVertical mean\n\n\nsigma_i\nHorizontal width\n\n\nsigma_j\nVertical width\n\n\nfreq\nFrecuency of the filter\n\n\ntheta\nAngle of the filter\n\n\nsigma_theta\nWidth of the angle?? Rotation of the domain??\n\n\n\n\n\n\ncreate_gabor_rot_tf\n\n create_gabor_rot_tf (Nrows, Ncols, imean, jmean, sigma_i, sigma_j, freq,\n                      theta, rot_theta, sigma_theta, fs)\n\nCreates a rotated Gabor filter with the input parameters.\n\n\n\n\nDetails\n\n\n\n\nNrows\nNumber of horizontal pixels\n\n\nNcols\nNumber of vertical pixels\n\n\nimean\nHorizontal mean (in degrees)\n\n\njmean\nVertical mean (in degrees)\n\n\nsigma_i\nHorizontal width (in degrees)\n\n\nsigma_j\nVertical width (in degrees)\n\n\nfreq\nFrequency\n\n\ntheta\nAngle\n\n\nrot_theta\nRotation of the domain??\n\n\nsigma_theta\nWidth of the angle?? Rotation of the domain??\n\n\nfs\nSampling frequency\n\n\n\n\ngabor = create_gabor_rot_tf(Nrows=20, Ncols=20, imean=0.5, jmean=0.5, sigma_i=0.1, sigma_j=0.1, freq=10, theta=0, rot_theta=0, sigma_theta=0, fs=20)\nplt.imshow(gabor)\nplt.show()\n\n2022-09-05 12:12:09.647925: W tensorflow/core/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz\n2022-09-05 12:12:09.651383: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled."
+  },
+  {
+    "objectID": "layers.html#creating-a-set-of-gabor-filters",
+    "href": "layers.html#creating-a-set-of-gabor-filters",
+    "title": "Layers",
+    "section": "Creating a set of Gabor filters",
+    "text": "Creating a set of Gabor filters\n\nIt can be a little bit tricky to translate plain Python for loops into tf.function.\n\nIn plain Python, if we wanted to create a set of filters we could initialize an empty array or list and fill it with the different filters generated inside a for loop, but we can’t do that inside a tf.function because Tensorflow tries to build the computational graph and starts to nest graphs inside graphs and the performance is terrible. Luckily for us, they implement a tf.TensorArray that can be used inside a tf.function to this effect.\n\n\ncreate_multiple_different_rot_gabor_tf\n\n create_multiple_different_rot_gabor_tf (n_gabors, Nrows, Ncols, imean,\n                                         jmean, sigma_i:list,\n                                         sigma_j:list, freq:list,\n                                         theta:list, rot_theta:list,\n                                         sigma_theta:list, fs)\n\nCreates a set of Gabor filters.\n\n\n\n\nType\nDetails\n\n\n\n\nn_gabors\n\nNumber of Gabor filters we want to create.\n\n\nNrows\n\nNumber of horizontal pixels.\n\n\nNcols\n\nNumber of vertical pixels.\n\n\nimean\n\nHorizontal mean (in degrees).\n\n\njmean\n\nVertical mean (in degrees).\n\n\nsigma_i\nlist\nHorizontal width (in degrees).\n\n\nsigma_j\nlist\nVertical width (in degrees).\n\n\nfreq\nlist\nFrequency.\n\n\ntheta\nlist\nAngle.\n\n\nrot_theta\nlist\nRotation of the domain??\n\n\nsigma_theta\nlist\nWidth of the angle?? Rotation of the domain??\n\n\nfs\n\nSampling frequency.\n\n\n\n\nn_gabors = 4\ngabors = create_multiple_different_rot_gabor_tf(n_gabors=n_gabors, Nrows=20, Ncols=20, imean=0.5, jmean=0.5, sigma_i=[0.1]*n_gabors, sigma_j=[0.1]*n_gabors, freq=[10]*n_gabors, \n                                                theta=[0]*n_gabors, rot_theta=[0]*n_gabors, sigma_theta=[0]*n_gabors, fs=20)\ngabors.shape\n\n2022-09-05 12:12:09.987560: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.\n\n\nTensorShape([4, 20, 20])\n\n\n\nfig, axes = plt.subplots(nrows=2, ncols=2)\nfor gabor_filter, ax in zip(gabors, axes.ravel()):\n    ax.imshow(gabor_filter)\nplt.show()\n\n\n\n\nWe can, as well, change the parameters of the Gabor filters independently:\n\nn_gabors = 4\nsigma_i = [0.1, 0.2, 0.3, 0.4]\nsigma_j = [0.1, 0.2, 0.3, 0.4]\nfreq = [10, 20, 30, 40]\ntheta = [0, 45, 90, 135]\nrot_theta = [0, 45, 90, 135]\nsigma_theta = [0, 45, 90, 135]\ngabors = create_multiple_different_rot_gabor_tf(n_gabors=n_gabors, Nrows=20, Ncols=20, imean=0.5, jmean=0.5, sigma_i=sigma_i, sigma_j=sigma_j, freq=freq, \n                                                theta=theta, rot_theta=rot_theta, sigma_theta=sigma_theta, fs=20)\ngabors.shape\n\n2022-09-05 12:12:10.600241: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.\n\n\nTensorShape([4, 20, 20])\n\n\n\nfig, axes = plt.subplots(nrows=2, ncols=2)\nfor gabor_filter, ax in zip(gabors, axes.ravel()):\n    ax.imshow(gabor_filter)\nplt.show()"
+  },
+  {
+    "objectID": "layers.html#random-initialize-a-set-of-gabor-filters",
+    "href": "layers.html#random-initialize-a-set-of-gabor-filters",
+    "title": "Layers",
+    "section": "Random initialize a set of Gabor filters",
+    "text": "Random initialize a set of Gabor filters\n\nInsted of defining ourselves the initial values, we can randomly initialize them. This can speed up our testing.\n\n\n\ncreate_multiple_random_rot_gabor_tf\n\n create_multiple_random_rot_gabor_tf (n_gabors, Nrows, Ncols, imean,\n                                      jmean, sigma_i:list, sigma_j:list,\n                                      freq:list, theta:list,\n                                      rot_theta:list, sigma_theta:list,\n                                      fs)\n\nCreates a set of Gabor filters.\n\n\n\n\nType\nDetails\n\n\n\n\nn_gabors\n\nNumber of Gabor filters we want to create.\n\n\nNrows\n\nNumber of horizontal pixels.\n\n\nNcols\n\nNumber of vertical pixels.\n\n\nimean\n\nHorizontal mean (in degrees).\n\n\njmean\n\nVertical mean (in degrees).\n\n\nsigma_i\nlist\nHorizontal width (in degrees).\n\n\nsigma_j\nlist\nVertical width (in degrees).\n\n\nfreq\nlist\nFrequency.\n\n\ntheta\nlist\nAngle.\n\n\nrot_theta\nlist\nRotation of the domain??\n\n\nsigma_theta\nlist\nWidth of the angle?? Rotation of the domain??\n\n\nfs\n\nSampling frequency."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "flayers",
+    "section": "",
+    "text": "pip install flayers"
+  }
+]

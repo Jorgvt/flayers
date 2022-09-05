@@ -9,4 +9,6 @@ d = { 'settings': { 'branch': 'master',
                                 'flayers.layers.create_gabor_rot_tf': ('layers.html#create_gabor_rot_tf', 'flayers/layers.py'),
                                 'flayers.layers.create_multiple_different_rot_gabor_tf': ( 'layers.html#create_multiple_different_rot_gabor_tf',
                                                                                            'flayers/layers.py'),
+                                'flayers.layers.create_multiple_random_rot_gabor_tf': ( 'layers.html#create_multiple_random_rot_gabor_tf',
+                                                                                        'flayers/layers.py'),
                                 'flayers.layers.gabor_2d_tf': ('layers.html#gabor_2d_tf', 'flayers/layers.py')}}}
