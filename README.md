@@ -6,5 +6,11 @@ flayers
 ## Install
 
 ``` sh
+git clone https://github.com/Jorgvt/flayers.git
+cd flayers
+pip install -e .
+```
+
+``` sh
 pip install flayers
 ```

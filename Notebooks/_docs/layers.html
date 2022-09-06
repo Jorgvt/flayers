@@ -172,20 +172,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">flayers</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./layers.html" class="sidebar-item-text sidebar-link active">Layers</a>
-  </div>
-</li>
-    </ul>
-    </div>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -204,9 +190,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#create_multiple_different_rot_gabor_tf" id="toc-create_multiple_different_rot_gabor_tf" class="nav-link" data-scroll-target="#create_multiple_different_rot_gabor_tf">create_multiple_different_rot_gabor_tf</a></li>
   </ul></li>
-  <li><a href="#random-initialize-a-set-of-gabor-filters" id="toc-random-initialize-a-set-of-gabor-filters" class="nav-link" data-scroll-target="#random-initialize-a-set-of-gabor-filters">Random initialize a set of Gabor filters</a>
+  <li><a href="#random-initialize-a-simple-set-of-gabor-filters" id="toc-random-initialize-a-simple-set-of-gabor-filters" class="nav-link" data-scroll-target="#random-initialize-a-simple-set-of-gabor-filters">Random initialize a simple set of Gabor filters</a>
   <ul class="collapse">
-  <li><a href="#create_multiple_random_rot_gabor_tf" id="toc-create_multiple_random_rot_gabor_tf" class="nav-link" data-scroll-target="#create_multiple_random_rot_gabor_tf">create_multiple_random_rot_gabor_tf</a></li>
+  <li><a href="#create_simple_random_set" id="toc-create_simple_random_set" class="nav-link" data-scroll-target="#create_simple_random_set">create_simple_random_set</a></li>
+  </ul></li>
+  <li><a href="#randomgabor" id="toc-randomgabor" class="nav-link" data-scroll-target="#randomgabor">RandomGabor</a>
+  <ul class="collapse">
+  <li><a href="#randomgabor-1" id="toc-randomgabor-1" class="nav-link" data-scroll-target="#randomgabor-1">RandomGabor</a></li>
+  <li><a href="#randomgabor.call" id="toc-randomgabor.call" class="nav-link" data-scroll-target="#randomgabor.call">RandomGabor.call</a></li>
+  <li><a href="#randomgabor.show_filters" id="toc-randomgabor.show_filters" class="nav-link" data-scroll-target="#randomgabor.show_filters">RandomGabor.show_filters</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Jorgvt/flayers/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -258,8 +250,8 @@ maxCacheSize: 5.33 GB
  &lt;dtype: 'float32'&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-05 12:12:09.182081: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:305] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
-2022-09-05 12:12:09.182479: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:271] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -&gt; physical PluggableDevice (device: 0, name: METAL, pci bus id: &lt;undefined&gt;)</code></pre>
+<pre><code>2022-09-05 14:41:22.149270: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:305] Could not identify NUMA node of platform GPU ID 0, defaulting to 0. Your kernel may not have been built with NUMA support.
+2022-09-05 14:41:22.149448: I tensorflow/core/common_runtime/pluggable_device/pluggable_device_factory.cc:271] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 0 MB memory) -&gt; physical PluggableDevice (device: 0, name: METAL, pci bus id: &lt;undefined&gt;)</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -275,6 +267,7 @@ maxCacheSize: 5.33 GB
 <h2 class="anchored" data-anchor-id="creating-a-gabor-filter-in-tensorflow">Creating a Gabor filter in <code>TensorFlow</code></h2>
 <p>First of all we need to be able to generate Gabor filters as <code>Tensorflow</code> <code>Tensor</code>:</p>
 <hr>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L20" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="gabor_2d_tf" class="level3">
 <h3 class="anchored" data-anchor-id="gabor_2d_tf">gabor_2d_tf</h3>
 <blockquote class="blockquote">
@@ -328,6 +321,7 @@ maxCacheSize: 5.33 GB
 </tbody>
 </table>
 <hr>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L50" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="create_gabor_rot_tf" class="level3">
 <h3 class="anchored" data-anchor-id="create_gabor_rot_tf">create_gabor_rot_tf</h3>
@@ -395,8 +389,8 @@ maxCacheSize: 5.33 GB
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(gabor)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-05 12:12:09.647925: W tensorflow/core/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz
-2022-09-05 12:12:09.651383: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.</code></pre>
+<pre><code>2022-09-05 14:41:22.617903: W tensorflow/core/platform/profile_utils/cpu_utils.cc:128] Failed to get CPU frequency: 0 Hz
+2022-09-05 14:41:22.618195: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="00_layers_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
@@ -411,6 +405,7 @@ maxCacheSize: 5.33 GB
 </blockquote>
 <p>In plain Python, if we wanted to create a set of filters we could initialize an empty array or list and fill it with the different filters generated inside a <code>for</code> loop, but we can’t do that inside a <code>tf.function</code> because <code>Tensorflow</code> tries to build the computational graph and starts to nest graphs inside graphs and the performance is terrible. Luckily for us, they implement a <code>tf.TensorArray</code> that can be used inside a <code>tf.function</code> to this effect.</p>
 <hr>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L83" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="create_multiple_different_rot_gabor_tf" class="level3">
 <h3 class="anchored" data-anchor-id="create_multiple_different_rot_gabor_tf">create_multiple_different_rot_gabor_tf</h3>
 <blockquote class="blockquote">
@@ -498,7 +493,7 @@ maxCacheSize: 5.33 GB
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, rot_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, sigma_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-05 12:12:09.987560: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.</code></pre>
+<pre><code>2022-09-05 14:41:22.929161: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
@@ -526,7 +521,7 @@ maxCacheSize: 5.33 GB
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-05 12:12:10.600241: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.</code></pre>
+<pre><code>2022-09-05 14:41:23.318301: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
@@ -543,93 +538,171 @@ maxCacheSize: 5.33 GB
 </div>
 </section>
 </section>
-<section id="random-initialize-a-set-of-gabor-filters" class="level2">
-<h2 class="anchored" data-anchor-id="random-initialize-a-set-of-gabor-filters">Random initialize a set of Gabor filters</h2>
+<section id="random-initialize-a-simple-set-of-gabor-filters" class="level2">
+<h2 class="anchored" data-anchor-id="random-initialize-a-simple-set-of-gabor-filters">Random initialize a simple set of Gabor filters</h2>
 <blockquote class="blockquote">
 <p>Insted of defining ourselves the initial values, we can randomly initialize them. This can speed up our testing.</p>
 </blockquote>
 <hr>
-<section id="create_multiple_random_rot_gabor_tf" class="level3">
-<h3 class="anchored" data-anchor-id="create_multiple_random_rot_gabor_tf">create_multiple_random_rot_gabor_tf</h3>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L113" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="create_simple_random_set" class="level3">
+<h3 class="anchored" data-anchor-id="create_simple_random_set">create_simple_random_set</h3>
 <blockquote class="blockquote">
-<pre><code> create_multiple_random_rot_gabor_tf (n_gabors, Nrows, Ncols, imean,
-                                      jmean, sigma_i:list, sigma_j:list,
-                                      freq:list, theta:list,
-                                      rot_theta:list, sigma_theta:list,
-                                      fs)</code></pre>
+<pre><code> create_simple_random_set (n_gabors, size)</code></pre>
 </blockquote>
-<p>Creates a set of Gabor filters.</p>
+<p>Creates a simple set of randomly initialized squared Gabor filters.</p>
 <table class="table">
 <thead>
 <tr class="header">
 <th></th>
-<th><strong>Type</strong></th>
 <th><strong>Details</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>n_gabors</td>
-<td></td>
 <td>Number of Gabor filters we want to create.</td>
 </tr>
 <tr class="even">
-<td>Nrows</td>
-<td></td>
-<td>Number of horizontal pixels.</td>
-</tr>
-<tr class="odd">
-<td>Ncols</td>
-<td></td>
-<td>Number of vertical pixels.</td>
-</tr>
-<tr class="even">
-<td>imean</td>
-<td></td>
-<td>Horizontal mean <em>(in degrees)</em>.</td>
-</tr>
-<tr class="odd">
-<td>jmean</td>
-<td></td>
-<td>Vertical mean <em>(in degrees)</em>.</td>
-</tr>
-<tr class="even">
-<td>sigma_i</td>
-<td>list</td>
-<td>Horizontal width <em>(in degrees)</em>.</td>
-</tr>
-<tr class="odd">
-<td>sigma_j</td>
-<td>list</td>
-<td>Vertical width <em>(in degrees)</em>.</td>
-</tr>
-<tr class="even">
-<td>freq</td>
-<td>list</td>
-<td>Frequency.</td>
-</tr>
-<tr class="odd">
-<td>theta</td>
-<td>list</td>
-<td>Angle.</td>
-</tr>
-<tr class="even">
-<td>rot_theta</td>
-<td>list</td>
-<td>Rotation of the domain??</td>
-</tr>
-<tr class="odd">
-<td>sigma_theta</td>
-<td>list</td>
-<td>Width of the angle?? Rotation of the domain??</td>
-</tr>
-<tr class="even">
-<td>fs</td>
-<td></td>
-<td>Sampling frequency.</td>
+<td>size</td>
+<td>Size of the Gabor (they will be square).</td>
 </tr>
 </tbody>
 </table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>gabors <span class="op">=</span> create_simple_random_set(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2022-09-05 14:41:23.782959: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>TensorShape([4, 20, 20])</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gabor_filter, ax <span class="kw">in</span> <span class="bu">zip</span>(gabors, axes.ravel()):</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(gabor_filter)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="00_layers_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="randomgabor" class="level2">
+<h2 class="anchored" data-anchor-id="randomgabor">RandomGabor</h2>
+<blockquote class="blockquote">
+<p>Finally, we can define a new layer based on the Gabor filters we defined.</p>
+</blockquote>
+<hr>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L142" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="randomgabor-1" class="level3">
+<h3 class="anchored" data-anchor-id="randomgabor-1">RandomGabor</h3>
+<blockquote class="blockquote">
+<pre><code> RandomGabor (*args, **kwargs)</code></pre>
+</blockquote>
+<p>Randomly initialized Gabor layer that is trainable through backpropagation.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>kwargs</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As the variables are going to be changing through the training, we need to be re-generating the Gabor filters. The optimum approach would be keeping track of when do the parameters change and re-calculate the filters accordingly, but as a first step, it’s easier to generate the filters each time the layer is called.</p>
+<blockquote class="blockquote">
+<p>This will be a waste of time in inference, but does the job during the training.</p>
+</blockquote>
+<hr>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#LNone" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="randomgabor.call" class="level3">
+<h3 class="anchored" data-anchor-id="randomgabor.call">RandomGabor.call</h3>
+<blockquote class="blockquote">
+<pre><code> RandomGabor.call (inputs)</code></pre>
+</blockquote>
+<p>Build a set of filters from the stored values and convolve them with the input.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>inputs</td>
+<td>Inputs to the layer.</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>sample_input <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">1</span>))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>sample_output <span class="op">=</span> gaborlayer(sample_input).numpy()</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_input.shape[<span class="dv">1</span>:<span class="dv">3</span>] <span class="op">==</span> sample_output.shape[<span class="dv">1</span>:<span class="dv">3</span>]</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_output.shape[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">4</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].imshow(sample_input.squeeze())</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(sample_output.squeeze())</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Input"</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Output"</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2022-09-05 14:41:24.475979: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:113] Plugin optimizer for device_type GPU is enabled.
+Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="00_layers_files/figure-html/cell-19-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>It can be helpful to implement a method to show the Gabor filters that are being used by the layer:</p>
+<hr>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#LNone" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="randomgabor.show_filters" class="level3">
+<h3 class="anchored" data-anchor-id="randomgabor.show_filters">RandomGabor.show_filters</h3>
+<blockquote class="blockquote">
+<pre><code> RandomGabor.show_filters ()</code></pre>
+</blockquote>
+<p>Calculates and plots the filters corresponding to the stored parameters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>gaborlayer.show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="00_layers_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We can check that the parameters are trainable and thus the gradient is propagated properly:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape:</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> gaborlayer(sample_input)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> output <span class="op">-</span> output<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=-95771330.0&gt;,
+ &lt;tf.Tensor: shape=(), dtype=float32, numpy=-256691950.0&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([1.12147510e+07, 2.08058700e+06, 1.88292202e+11, 1.19323325e+06])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([4.04293825e+06, 1.21869860e+07, 1.56390707e+09, 7.58140125e+05])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-6.51747734e+04, -7.98653369e+03, -1.17340864e+09,  3.53471523e+04])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-4.07312281e+05, -1.30986512e+06, -2.92020388e+10, -2.28357281e+05])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([ 5.70060875e+05,  1.05778288e+06, -2.78123059e+09,  2.44379922e+05])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-1.62746047e+05,  2.52082250e+05,  3.19831286e+10, -1.60228037e+04])&gt;]</code></pre>
+</div>
+</div>
 
 
 </section>
