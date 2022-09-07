@@ -3,3 +3,6 @@ website:
     contents:
       - index.ipynb
       - 00_layers.ipynb
+      - section: Experiments
+        contents:
+          - Experiments/00_randomgabor.ipynb

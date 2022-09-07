@@ -6,6 +6,7 @@ __all__ = ['gabor_2d_tf', 'create_gabor_rot_tf', 'create_multiple_different_rot_
 
 # %% ../Notebooks/00_layers.ipynb 3
 import numpy as np
+import matplotlib.pyplot as plt
 import tensorflow as tf
 from einops import rearrange, repeat
 

@@ -20,7 +20,6 @@ website:
   description: "Functional layers ready to be trained with backpropagation."
   twitter-card: true
   open-graph: true
-  reader-mode: true
   repo-branch: master
   repo-url: "https://github.com/Jorgvt/flayers"
   repo-actions: [issue]

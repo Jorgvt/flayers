@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://Jorgvt.github.io/flayers/layers.html</loc>
-    <lastmod>2022-09-05T09:52:22.815Z</lastmod>
-  </url>
-  <url>
     <loc>https://Jorgvt.github.io/flayers/index.html</loc>
-    <lastmod>2022-09-05T09:46:30.488Z</lastmod>
+    <lastmod>2022-09-07T09:44:19.000Z</lastmod>
   </url>
   <url>
-    <loc>https://Jorgvt.github.io/flayers/Notebooks/layers.html</loc>
-    <lastmod>2022-09-05T10:12:24.103Z</lastmod>
+    <loc>https://Jorgvt.github.io/flayers/Experiments/00_randomgabor.html</loc>
+    <lastmod>2022-09-07T09:44:19.644Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/flayers/layers.html</loc>
+    <lastmod>2022-09-07T09:44:20.529Z</lastmod>
   </url>
 </urlset>
