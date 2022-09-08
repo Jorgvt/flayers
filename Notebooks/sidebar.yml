@@ -5,4 +5,9 @@ website:
       - 00_layers.ipynb
       - section: Experiments
         contents:
-          - Experiments/00_randomgabor.ipynb
+          - Experiments/00_gaborlayer.ipynb
+          - Experiments/01_randomgabor.ipynb
+          - Experiments/02_multiple_gaborlayer.ipynb
+          - Experiments/03_multiple_randomgabor.ipynb
+          - Experiments/04_multiple_gaborlayer_relu.ipynb
+          - Experiments/05_multiple_randomgabor_relu.ipynb

@@ -2,14 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://Jorgvt.github.io/flayers/index.html</loc>
-    <lastmod>2022-09-07T11:13:53.295Z</lastmod>
+    <lastmod>2022-09-08T12:47:54.821Z</lastmod>
   </url>
   <url>
-    <loc>https://Jorgvt.github.io/flayers/Experiments/00_randomgabor.html</loc>
-    <lastmod>2022-09-07T11:13:53.963Z</lastmod>
+    <loc>https://Jorgvt.github.io/flayers/Experiments/03_multiple_randomgabor.html</loc>
+    <lastmod>2022-09-08T12:47:55.565Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/flayers/Experiments/01_randomgabor.html</loc>
+    <lastmod>2022-09-08T12:47:56.225Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/flayers/Experiments/00_gaborlayer.html</loc>
+    <lastmod>2022-09-08T12:47:56.873Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/flayers/Experiments/05_multiple_randomgabor_relu.html</loc>
+    <lastmod>2022-09-08T12:47:57.542Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/flayers/Experiments/04_multiple_gaborlayer_relu.html</loc>
+    <lastmod>2022-09-08T12:47:58.214Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/flayers/Experiments/02_multiple_gaborlayer.html</loc>
+    <lastmod>2022-09-08T12:47:58.882Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/layers.html</loc>
-    <lastmod>2022-09-07T11:13:54.979Z</lastmod>
+    <lastmod>2022-09-08T12:47:59.786Z</lastmod>
   </url>
 </urlset>

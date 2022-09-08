@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="In this quick experiment we will be training an MNIST classifier using multiple GaborLayer layers followed by ReLU non-linearities. At the same time, the size of the Gabor filters is reduced after each pooling operation.">
+
+<title>flayers - Gabor layer experiment</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="flayers - Gabor layer experiment">
+<meta property="og:description" content="In this quick experiment we will be training an MNIST classifier using multiple GaborLayer layers followed by ReLU non-linearities. At the same time, the size of the Gabor filters is reduced after each pooling operation.">
+<meta property="og:site-name" content="flayers">
+<meta name="twitter:title" content="flayers - Gabor layer experiment">
+<meta name="twitter:description" content="In this quick experiment we will be training an MNIST classifier using multiple GaborLayer layers followed by ReLU non-linearities. At the same time, the size of the Gabor filters is reduced after each pooling operation.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">flayers</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Jorgvt/flayers"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Gabor layer experiment</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">flayers</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../layers.html" class="sidebar-item-text sidebar-link">Layers</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Experiments</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Experiments/00_gaborlayer.html" class="sidebar-item-text sidebar-link">Gabor layer experiment</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Experiments/01_randomgabor.html" class="sidebar-item-text sidebar-link">Random Gabor experiment</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Experiments/02_multiple_gaborlayer.html" class="sidebar-item-text sidebar-link">Gabor layer experiment</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Experiments/03_multiple_randomgabor.html" class="sidebar-item-text sidebar-link">Multiple Random Gabor experiment</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Experiments/04_multiple_gaborlayer_relu.html" class="sidebar-item-text sidebar-link active">Gabor layer experiment</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Experiments/05_multiple_randomgabor_relu.html" class="sidebar-item-text sidebar-link">Multiple Random Gabor experiment</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#library-importing" id="toc-library-importing" class="nav-link active" data-scroll-target="#library-importing">Library importing</a></li>
+  <li><a href="#data-loading" id="toc-data-loading" class="nav-link" data-scroll-target="#data-loading">Data loading</a></li>
+  <li><a href="#definition-of-simple-model" id="toc-definition-of-simple-model" class="nav-link" data-scroll-target="#definition-of-simple-model">Definition of simple model</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Jorgvt/flayers/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Gabor layer experiment</h1>
+</div>
+
+<div>
+  <div class="description">
+    In this quick experiment we will be training an MNIST classifier using multiple <code>GaborLayer</code> layers followed by ReLU non-linearities. At the same time, the size of the Gabor filters is reduced after each pooling operation.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="library-importing" class="level2">
+<h2 class="anchored" data-anchor-id="library-importing">Library importing</h2>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> einops <span class="im">import</span> rearrange, repeat</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras <span class="im">import</span> layers</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.datasets <span class="im">import</span> mnist</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flayers.layers <span class="im">import</span> GaborLayer</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-loading" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading">Data loading</h2>
+<blockquote class="blockquote">
+<p>We will be using MNIST for a simple and quick test.</p>
+</blockquote>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(X_train, Y_train), (X_test, Y_test) <span class="op">=</span> mnist.load_data()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> repeat(X_train, <span class="st">"b h w -&gt;  b h w c"</span>, c<span class="op">=</span><span class="dv">1</span>)<span class="op">/</span><span class="fl">255.0</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> repeat(X_test, <span class="st">"b h w -&gt;  b h w c"</span>, c<span class="op">=</span><span class="dv">1</span>)<span class="op">/</span><span class="fl">255.0</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>X_train.shape, Y_train.shape, X_test.shape, Y_test.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>((60000, 28, 28, 1), (60000,), (10000, 28, 28, 1), (10000,))</code></pre>
+</div>
+</div>
+</section>
+<section id="definition-of-simple-model" class="level2">
+<h2 class="anchored" data-anchor-id="definition-of-simple-model">Definition of simple model</h2>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>n_gabors <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sigma_i <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sigma_j <span class="op">=</span> [<span class="fl">0.2</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">10</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> [<span class="dv">0</span>, np.pi<span class="op">/</span><span class="dv">2</span>, np.pi<span class="op">/</span><span class="dv">4</span>, <span class="op">-</span>np.pi<span class="op">/</span><span class="dv">4</span>]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>rot_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>sigma_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>, np.pi<span class="op">/</span><span class="dv">4</span>, <span class="op">-</span>np.pi<span class="op">/</span><span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential([</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>               theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>, input_shape<span class="op">=</span>(<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>)),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    layers.ReLU(),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    layers.MaxPool2D(<span class="dv">2</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">10</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>               theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">10</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    layers.ReLU(),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    layers.MaxPool2D(<span class="dv">2</span>),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">5</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>               theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">5</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    layers.ReLU(),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    layers.MaxPool2D(<span class="dv">2</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    layers.GlobalAveragePooling2D(),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    layers.Dense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">"adam"</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>              loss<span class="op">=</span><span class="st">"sparse_categorical_crossentropy"</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Model: "sequential_1"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+gabor_layer_3 (GaborLayer)   (None, 28, 28, 4)         26        
+_________________________________________________________________
+re_lu_3 (ReLU)               (None, 28, 28, 4)         0         
+_________________________________________________________________
+max_pooling2d_3 (MaxPooling2 (None, 14, 14, 4)         0         
+_________________________________________________________________
+gabor_layer_4 (GaborLayer)   (None, 14, 14, 4)         26        
+_________________________________________________________________
+re_lu_4 (ReLU)               (None, 14, 14, 4)         0         
+_________________________________________________________________
+max_pooling2d_4 (MaxPooling2 (None, 7, 7, 4)           0         
+_________________________________________________________________
+gabor_layer_5 (GaborLayer)   (None, 7, 7, 4)           26        
+_________________________________________________________________
+re_lu_5 (ReLU)               (None, 7, 7, 4)           0         
+_________________________________________________________________
+max_pooling2d_5 (MaxPooling2 (None, 3, 3, 4)           0         
+_________________________________________________________________
+global_average_pooling2d_1 ( (None, 4)                 0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 10)                50        
+=================================================================
+Total params: 128
+Trainable params: 128
+Non-trainable params: 0
+_________________________________________________________________</code></pre>
+</div>
+</div>
+<p>We can show the initial Gabor filters:</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">0</span>].show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2022-09-08 12:04:47.616859: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)
+2022-09-08 12:04:47.838710: I tensorflow/core/util/cuda_solvers.cc:180] Creating CudaSolver handles for stream 0x5600333a86c0</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="04_multiple_gaborlayer_relu_files/figure-html/cell-6-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">3</span>].show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="04_multiple_gaborlayer_relu_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">6</span>].show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="04_multiple_gaborlayer_relu_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X_train, Y_train, batch_size<span class="op">=</span><span class="dv">128</span>, epochs<span class="op">=</span><span class="dv">100</span>, validation_split<span class="op">=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/100</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>2022-09-08 12:05:58.537282: I tensorflow/stream_executor/cuda/cuda_dnn.cc:369] Loaded cuDNN version 8100
+2022-09-08 12:05:58.998947: I tensorflow/core/platform/default/subprocess.cc:304] Start cannot spawn child process: No such file or directory</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>375/375 [==============================] - 45s 88ms/step - loss: 985.9783 - accuracy: 0.1111 - val_loss: 3.0740 - val_accuracy: 0.0936
+Epoch 2/100
+375/375 [==============================] - 32s 85ms/step - loss: 2.5712 - accuracy: 0.0968 - val_loss: 2.4051 - val_accuracy: 0.0983
+Epoch 3/100
+375/375 [==============================] - 32s 84ms/step - loss: 2.3618 - accuracy: 0.1037 - val_loss: 2.3399 - val_accuracy: 0.1082
+Epoch 4/100
+375/375 [==============================] - 33s 87ms/step - loss: 2.3222 - accuracy: 0.1124 - val_loss: 2.3124 - val_accuracy: 0.1216
+Epoch 5/100
+375/375 [==============================] - 32s 86ms/step - loss: 2.3025 - accuracy: 0.1255 - val_loss: 2.2956 - val_accuracy: 0.1308
+Epoch 6/100
+375/375 [==============================] - 33s 87ms/step - loss: 2.2889 - accuracy: 0.1331 - val_loss: 2.2823 - val_accuracy: 0.1339
+Epoch 7/100
+375/375 [==============================] - 31s 84ms/step - loss: 2.2780 - accuracy: 0.1406 - val_loss: 2.2732 - val_accuracy: 0.1412
+Epoch 8/100
+375/375 [==============================] - 32s 84ms/step - loss: 2.2704 - accuracy: 0.1438 - val_loss: 2.2659 - val_accuracy: 0.1460
+Epoch 9/100
+375/375 [==============================] - 31s 84ms/step - loss: 2.2643 - accuracy: 0.1460 - val_loss: 2.2597 - val_accuracy: 0.1444
+Epoch 10/100
+375/375 [==============================] - 32s 85ms/step - loss: 2.2591 - accuracy: 0.1466 - val_loss: 2.2548 - val_accuracy: 0.1482
+Epoch 11/100
+375/375 [==============================] - 32s 84ms/step - loss: 2.2529 - accuracy: 0.1501 - val_loss: 2.2484 - val_accuracy: 0.1501
+Epoch 12/100
+375/375 [==============================] - 32s 84ms/step - loss: 2.2463 - accuracy: 0.1546 - val_loss: 2.2382 - val_accuracy: 0.1579
+Epoch 13/100
+375/375 [==============================] - 31s 84ms/step - loss: 2.2391 - accuracy: 0.1558 - val_loss: 2.2323 - val_accuracy: 0.1558
+Epoch 14/100
+375/375 [==============================] - 32s 84ms/step - loss: 2.2319 - accuracy: 0.1632 - val_loss: 2.2225 - val_accuracy: 0.1595
+Epoch 15/100
+375/375 [==============================] - 31s 83ms/step - loss: 2.2251 - accuracy: 0.1623 - val_loss: 2.2168 - val_accuracy: 0.1688
+Epoch 16/100
+375/375 [==============================] - 31s 84ms/step - loss: 2.2159 - accuracy: 0.1707 - val_loss: 2.2077 - val_accuracy: 0.1709
+Epoch 17/100
+375/375 [==============================] - 31s 83ms/step - loss: 2.2050 - accuracy: 0.1780 - val_loss: 2.1958 - val_accuracy: 0.1867
+Epoch 18/100
+375/375 [==============================] - 31s 82ms/step - loss: 2.1919 - accuracy: 0.1858 - val_loss: 2.1867 - val_accuracy: 0.1929
+Epoch 19/100
+375/375 [==============================] - 31s 81ms/step - loss: 2.1812 - accuracy: 0.1945 - val_loss: 2.1729 - val_accuracy: 0.1979
+Epoch 20/100
+375/375 [==============================] - 31s 83ms/step - loss: 2.1656 - accuracy: 0.2046 - val_loss: 2.1579 - val_accuracy: 0.2122
+Epoch 21/100
+375/375 [==============================] - 31s 82ms/step - loss: 2.1526 - accuracy: 0.2124 - val_loss: 2.1398 - val_accuracy: 0.2209
+Epoch 22/100
+375/375 [==============================] - 31s 84ms/step - loss: 2.1356 - accuracy: 0.2198 - val_loss: 2.1211 - val_accuracy: 0.2302
+Epoch 23/100
+375/375 [==============================] - 31s 83ms/step - loss: 2.1097 - accuracy: 0.2297 - val_loss: 2.1363 - val_accuracy: 0.1929
+Epoch 24/100
+375/375 [==============================] - 31s 82ms/step - loss: 2.0828 - accuracy: 0.2349 - val_loss: 2.0603 - val_accuracy: 0.2377
+Epoch 25/100
+375/375 [==============================] - 31s 82ms/step - loss: 2.0613 - accuracy: 0.2377 - val_loss: 2.0356 - val_accuracy: 0.2533
+Epoch 26/100
+375/375 [==============================] - 31s 83ms/step - loss: 2.0246 - accuracy: 0.2483 - val_loss: 2.0052 - val_accuracy: 0.2559
+Epoch 27/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.9939 - accuracy: 0.2626 - val_loss: 2.0181 - val_accuracy: 0.2536
+Epoch 28/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.9504 - accuracy: 0.2867 - val_loss: 1.9345 - val_accuracy: 0.2952
+Epoch 29/100
+375/375 [==============================] - 30s 81ms/step - loss: 1.9102 - accuracy: 0.2981 - val_loss: 1.8928 - val_accuracy: 0.3027
+Epoch 30/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.8791 - accuracy: 0.3022 - val_loss: 1.8656 - val_accuracy: 0.2966
+Epoch 31/100
+375/375 [==============================] - 31s 81ms/step - loss: 1.8436 - accuracy: 0.3085 - val_loss: 1.8246 - val_accuracy: 0.3078
+Epoch 32/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.8176 - accuracy: 0.3138 - val_loss: 1.7932 - val_accuracy: 0.3173
+Epoch 33/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.7868 - accuracy: 0.3216 - val_loss: 1.7776 - val_accuracy: 0.3264
+Epoch 34/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.7210 - accuracy: 0.3379 - val_loss: 1.6930 - val_accuracy: 0.3298
+Epoch 35/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.6528 - accuracy: 0.3550 - val_loss: 1.6709 - val_accuracy: 0.3572
+Epoch 36/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.6281 - accuracy: 0.3638 - val_loss: 1.6007 - val_accuracy: 0.3685
+Epoch 37/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.5943 - accuracy: 0.3723 - val_loss: 1.5715 - val_accuracy: 0.3918
+Epoch 38/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.5836 - accuracy: 0.3803 - val_loss: 1.5498 - val_accuracy: 0.3907
+Epoch 39/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.5560 - accuracy: 0.3921 - val_loss: 1.5089 - val_accuracy: 0.4304
+Epoch 40/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.5430 - accuracy: 0.4028 - val_loss: 1.4976 - val_accuracy: 0.4376
+Epoch 41/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.5249 - accuracy: 0.4141 - val_loss: 1.4813 - val_accuracy: 0.4534
+Epoch 42/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.4983 - accuracy: 0.4308 - val_loss: 1.4671 - val_accuracy: 0.4387
+Epoch 43/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.4679 - accuracy: 0.4423 - val_loss: 1.4519 - val_accuracy: 0.4453
+Epoch 44/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.4707 - accuracy: 0.4391 - val_loss: 1.3944 - val_accuracy: 0.4703
+Epoch 45/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.4273 - accuracy: 0.4564 - val_loss: 1.5095 - val_accuracy: 0.4157
+Epoch 46/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.3460 - accuracy: 0.4915 - val_loss: 1.2557 - val_accuracy: 0.5315
+Epoch 47/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.2945 - accuracy: 0.5171 - val_loss: 1.2103 - val_accuracy: 0.5444
+Epoch 48/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.2753 - accuracy: 0.5259 - val_loss: 1.3190 - val_accuracy: 0.5141
+Epoch 49/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.2489 - accuracy: 0.5384 - val_loss: 1.2835 - val_accuracy: 0.5042
+Epoch 50/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.2157 - accuracy: 0.5519 - val_loss: 1.1760 - val_accuracy: 0.5705
+Epoch 51/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.2159 - accuracy: 0.5510 - val_loss: 1.1809 - val_accuracy: 0.5684
+Epoch 52/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.2119 - accuracy: 0.5555 - val_loss: 1.1244 - val_accuracy: 0.5897
+Epoch 53/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1933 - accuracy: 0.5614 - val_loss: 1.1595 - val_accuracy: 0.5832
+Epoch 54/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.2085 - accuracy: 0.5562 - val_loss: 1.2195 - val_accuracy: 0.5597
+Epoch 55/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1991 - accuracy: 0.5624 - val_loss: 1.1500 - val_accuracy: 0.5898
+Epoch 56/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1975 - accuracy: 0.5623 - val_loss: 1.1141 - val_accuracy: 0.5968
+Epoch 57/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1818 - accuracy: 0.5651 - val_loss: 1.1461 - val_accuracy: 0.5820
+Epoch 58/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1922 - accuracy: 0.5619 - val_loss: 1.1506 - val_accuracy: 0.5747
+Epoch 59/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.2001 - accuracy: 0.5591 - val_loss: 1.1239 - val_accuracy: 0.5916
+Epoch 60/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1768 - accuracy: 0.5722 - val_loss: 1.1599 - val_accuracy: 0.5850
+Epoch 61/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1618 - accuracy: 0.5755 - val_loss: 1.0917 - val_accuracy: 0.6029
+Epoch 62/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1562 - accuracy: 0.5796 - val_loss: 1.1027 - val_accuracy: 0.5997
+Epoch 63/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1704 - accuracy: 0.5736 - val_loss: 1.0901 - val_accuracy: 0.6047
+Epoch 64/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1763 - accuracy: 0.5681 - val_loss: 1.1084 - val_accuracy: 0.6019
+Epoch 65/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1516 - accuracy: 0.5791 - val_loss: 1.1424 - val_accuracy: 0.5817
+Epoch 66/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1623 - accuracy: 0.5738 - val_loss: 1.0913 - val_accuracy: 0.5972
+Epoch 67/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1638 - accuracy: 0.5762 - val_loss: 1.1198 - val_accuracy: 0.6037
+Epoch 68/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1481 - accuracy: 0.5801 - val_loss: 1.0738 - val_accuracy: 0.6120
+Epoch 69/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1545 - accuracy: 0.5778 - val_loss: 1.2973 - val_accuracy: 0.5236
+Epoch 70/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1556 - accuracy: 0.5770 - val_loss: 1.1003 - val_accuracy: 0.6025
+Epoch 71/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1413 - accuracy: 0.5808 - val_loss: 1.1655 - val_accuracy: 0.5612
+Epoch 72/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1646 - accuracy: 0.5732 - val_loss: 1.0869 - val_accuracy: 0.6077
+Epoch 73/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1467 - accuracy: 0.5826 - val_loss: 1.1171 - val_accuracy: 0.5973
+Epoch 74/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1394 - accuracy: 0.5827 - val_loss: 1.0873 - val_accuracy: 0.6067
+Epoch 75/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1287 - accuracy: 0.5866 - val_loss: 1.0773 - val_accuracy: 0.6004
+Epoch 76/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1397 - accuracy: 0.5833 - val_loss: 1.1152 - val_accuracy: 0.5881
+Epoch 77/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1492 - accuracy: 0.5792 - val_loss: 1.1067 - val_accuracy: 0.5840
+Epoch 78/100
+375/375 [==============================] - 30s 81ms/step - loss: 1.1314 - accuracy: 0.5841 - val_loss: 1.0981 - val_accuracy: 0.5865
+Epoch 79/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1389 - accuracy: 0.5816 - val_loss: 1.0705 - val_accuracy: 0.6087
+Epoch 80/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1331 - accuracy: 0.5823 - val_loss: 1.0890 - val_accuracy: 0.5955
+Epoch 81/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1568 - accuracy: 0.5715 - val_loss: 1.0918 - val_accuracy: 0.6032
+Epoch 82/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1627 - accuracy: 0.5715 - val_loss: 1.0989 - val_accuracy: 0.6002
+Epoch 83/100
+375/375 [==============================] - 30s 81ms/step - loss: 1.1402 - accuracy: 0.5812 - val_loss: 1.0879 - val_accuracy: 0.6016
+Epoch 84/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1329 - accuracy: 0.5858 - val_loss: 1.0934 - val_accuracy: 0.6027
+Epoch 85/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1283 - accuracy: 0.5911 - val_loss: 1.0936 - val_accuracy: 0.6072
+Epoch 86/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1244 - accuracy: 0.5931 - val_loss: 1.1160 - val_accuracy: 0.5979
+Epoch 87/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1222 - accuracy: 0.5947 - val_loss: 1.0462 - val_accuracy: 0.6208
+Epoch 88/100
+375/375 [==============================] - 30s 81ms/step - loss: 1.1086 - accuracy: 0.5978 - val_loss: 1.0793 - val_accuracy: 0.6053
+Epoch 89/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1146 - accuracy: 0.5970 - val_loss: 1.0564 - val_accuracy: 0.6127
+Epoch 90/100
+375/375 [==============================] - 31s 83ms/step - loss: 1.1012 - accuracy: 0.6016 - val_loss: 1.1103 - val_accuracy: 0.6007
+Epoch 91/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1043 - accuracy: 0.6010 - val_loss: 1.0442 - val_accuracy: 0.6267
+Epoch 92/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1101 - accuracy: 0.6013 - val_loss: 1.1222 - val_accuracy: 0.5767
+Epoch 93/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.0980 - accuracy: 0.6058 - val_loss: 1.0606 - val_accuracy: 0.6108
+Epoch 94/100
+375/375 [==============================] - 31s 82ms/step - loss: 1.1073 - accuracy: 0.5988 - val_loss: 1.0959 - val_accuracy: 0.5970
+Epoch 95/100
+375/375 [==============================] - 32s 85ms/step - loss: 1.0962 - accuracy: 0.6022 - val_loss: 1.0617 - val_accuracy: 0.6246
+Epoch 96/100
+375/375 [==============================] - 31s 84ms/step - loss: 1.1002 - accuracy: 0.6028 - val_loss: 1.0339 - val_accuracy: 0.6304
+Epoch 97/100
+375/375 [==============================] - 31s 84ms/step - loss: 1.0971 - accuracy: 0.6040 - val_loss: 1.0482 - val_accuracy: 0.6246
+Epoch 98/100
+375/375 [==============================] - 31s 84ms/step - loss: 1.0995 - accuracy: 0.6049 - val_loss: 1.0905 - val_accuracy: 0.6219
+Epoch 99/100
+375/375 [==============================] - 31s 84ms/step - loss: 1.0929 - accuracy: 0.6069 - val_loss: 1.0765 - val_accuracy: 0.6123
+Epoch 100/100
+375/375 [==============================] - 31s 84ms/step - loss: 1.0936 - accuracy: 0.6077 - val_loss: 1.0671 - val_accuracy: 0.6162</code></pre>
+</div>
+</div>
+<p>Showing the training dynamics:</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">4</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(history.history[<span class="st">'loss'</span>][<span class="dv">1</span>:], label<span class="op">=</span><span class="st">"Train"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].plot(history.history[<span class="st">'val_loss'</span>][<span class="dv">1</span>:], label<span class="op">=</span><span class="st">"Val"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(history.history[<span class="st">'accuracy'</span>], label<span class="op">=</span><span class="st">"Train"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].plot(history.history[<span class="st">'val_accuracy'</span>], label<span class="op">=</span><span class="st">"Val"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="04_multiple_gaborlayer_relu_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Calculate the metrics in the test set:</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model.evaluate(X_test, Y_test, batch_size<span class="op">=</span><span class="dv">128</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>79/79 [==============================] - 3s 33ms/step - loss: 1.0718 - accuracy: 0.6153</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>[1.071818232536316, 0.6152999997138977]</code></pre>
+</div>
+</div>
+<p>We can visualize the gabor filters after the training process:</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">0</span>].show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="04_multiple_gaborlayer_relu_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">2</span>].show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>AttributeError: 'MaxPooling2D' object has no attribute 'show_filters'</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">4</span>].show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="04_multiple_gaborlayer_relu_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We can even check the atributes of the layer to inspect the change in the initial parameters:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">0</span>].theta.numpy()<span class="op">*</span><span class="dv">180</span><span class="op">/</span>np.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>array([  0.38321877,  90.76502   ,  45.756405  , -47.088924  ],
+      dtype=float32)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">0</span>].rot_theta.numpy()<span class="op">*</span><span class="dv">180</span><span class="op">/</span>np.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>array([ 0.39840868, -0.8525029 , -0.04723335, -1.0895499 ], dtype=float32)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">0</span>].sigma_theta.numpy()<span class="op">*</span><span class="dv">180</span><span class="op">/</span>np.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>array([-45.138485,   9.870471,  55.021404, -44.676727], dtype=float32)</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
