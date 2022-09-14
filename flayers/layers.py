@@ -8,7 +8,7 @@ __all__ = ['gabor_2d_tf', 'create_gabor_rot_tf', 'create_multiple_different_rot_
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from einops import rearrange, repeat
+from einops import rearrange, repeat, reduce
 
 from fastcore.basics import patch
 
@@ -93,6 +93,7 @@ def create_multiple_different_rot_gabor_tf(n_gabors, # Number of Gabor filters w
                                            rot_theta: list, # Rotation of the domain??
                                            sigma_theta: list, # Width of the angle?? Rotation of the domain??
                                            fs, # Sampling frequency.
+                                           normalize:bool = True, # Wether to normalize (and divide by n_gabors) or not the Gabors.
                                            ):
     """
     Creates a set of Gabor filters.
@@ -107,6 +108,10 @@ def create_multiple_different_rot_gabor_tf(n_gabors, # Number of Gabor filters w
     gabors = gabors.stack()
     # gabors = tf.expand_dims(gabors, axis = -1)
     # gabors = tf.transpose(gabors, perm = [1,2,3,0])
+    ## Normalize the gabors
+    if normalize: 
+        max_per_gabor = reduce(gabors, "n_gabors Ncols Nrows -> n_gabors () ()", "max")
+        gabors = gabors/(max_per_gabor*tf.cast(n_gabors, tf.float32))
     return gabors
 
 # %% ../Notebooks/00_layers.ipynb 25
@@ -122,16 +127,14 @@ class GaborLayer(tf.keras.layers.Layer):
                  sigma_i: list, # Horizontal width *(in degrees)*.
                  sigma_j: list, # Vertical width *(in degrees)*.
                  freq: list, # Frequency.
-                 theta: list, # Angle.
-                 rot_theta: list, # Rotation of the domain??
-                 sigma_theta: list, # Width of the angle?? Rotation of the domain??
+                 theta: list, # Rotation of the sinusoid **(rad)**.
+                 rot_theta: list, # Rotation of the domain **(rad)**.
+                 sigma_theta: list, # Rotation of the envelope  **(rad)**.
                  fs, # Sampling frequency.
                  **kwargs, # Arguments to be passed to the base `Layer`.
                  ):
         super(GaborLayer, self).__init__(**kwargs)
-
-        # if len(sigma_i) != n_gabors: raise ValueError(f"sigma_i has {len(sigma_i)} values but should have {n_gabors} (n_gabors = {n_gabors}).")
-
+        
         self.n_gabors = n_gabors
         self.size = size
         self.Nrows, self.Ncols = size, size
@@ -139,26 +142,15 @@ class GaborLayer(tf.keras.layers.Layer):
 
         self._check_parameter_length(sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
         imean, jmean, sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta = cast_all(imean, jmean, sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
+        self.n_gabors, self.Nrows, self.Ncols, self.fs = cast_all(self.n_gabors, self.Nrows, self.Ncols, self.fs, dtype=tf.int32)
         
         self.imean = tf.Variable(imean, trainable=True, name="imean")
         self.jmean = tf.Variable(jmean, trainable=True, name="jmean")
-
-        # self.sigma_i = tf.Variable(np.random.uniform(0, self.Nrows/self.fs, n_gabors), trainable=True, name="sigma_i")
         self.sigma_i = tf.Variable(sigma_i, trainable=True, name="sigma_i")
-
-        # self.sigma_j = tf.Variable(np.random.uniform(0, self.Ncols/self.fs, n_gabors), trainable=True, name="sigma_j")
         self.sigma_j = tf.Variable(sigma_j, trainable=True, name="sigma_j")
-
-        # self.freq = tf.Variable(np.random.uniform(0, self.fs, n_gabors), trainable=True, name="freq")
         self.freq = tf.Variable(freq, trainable=True, name="freq")
-
-        # self.theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="theta")
         self.theta = tf.Variable(theta, trainable=True, name="theta")
-
-        # self.rot_theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="rot_theta")
         self.rot_theta = tf.Variable(rot_theta, trainable=True, name="rot_theta")
-
-        # self.sigma_theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="sigma_theta")
         self.sigma_theta = tf.Variable(sigma_theta, trainable=True, name="sigma_theta")
 
     def _check_parameter_length(self, *args):
@@ -176,6 +168,7 @@ def call(self: GaborLayer,
      """
      gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
                                                      freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
+     
      ## Keras expects the convolutional filters in shape (size_x, size_y, C_in, C_out)
      gabors = repeat(gabors, "n_gabors Ncols Nrows -> Ncols Nrows C_in n_gabors", C_in=inputs.shape[-1])
      
@@ -191,7 +184,7 @@ def show_filters(self: GaborLayer):
     nrows = self.n_gabors - ncols
     gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
                                                     freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs).numpy()
-    fig, axes = plt.subplots(nrows, ncols)
+    fig, axes = plt.subplots(int(nrows), int(ncols))
     for gabor, ax in zip(gabors, axes.ravel()):
         ax.imshow(gabor)
     plt.show()
