@@ -141,17 +141,21 @@ class GaborLayer(tf.keras.layers.Layer):
         self.fs = self.Ncols
 
         self._check_parameter_length(sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
-        imean, jmean, sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta = cast_all(imean, jmean, sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
+        self.imean, self.jmean, self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta = cast_all(imean, jmean, sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
         self.n_gabors, self.Nrows, self.Ncols, self.fs = cast_all(self.n_gabors, self.Nrows, self.Ncols, self.fs, dtype=tf.int32)
-        
-        self.imean = tf.Variable(imean, trainable=True, name="imean")
-        self.jmean = tf.Variable(jmean, trainable=True, name="jmean")
-        self.sigma_i = tf.Variable(sigma_i, trainable=True, name="sigma_i")
-        self.sigma_j = tf.Variable(sigma_j, trainable=True, name="sigma_j")
-        self.freq = tf.Variable(freq, trainable=True, name="freq")
-        self.theta = tf.Variable(theta, trainable=True, name="theta")
-        self.rot_theta = tf.Variable(rot_theta, trainable=True, name="rot_theta")
-        self.sigma_theta = tf.Variable(sigma_theta, trainable=True, name="sigma_theta")
+        self.build(())
+
+    def build(self,
+              input_shape, # Input's shape to the layer.
+              ):
+        self.imean = tf.Variable(self.imean, trainable=True, name="imean")
+        self.jmean = tf.Variable(self.jmean, trainable=True, name="jmean")
+        self.sigma_i = tf.Variable(self.sigma_i, trainable=True, name="sigma_i")
+        self.sigma_j = tf.Variable(self.sigma_j, trainable=True, name="sigma_j")
+        self.freq = tf.Variable(self.freq, trainable=True, name="freq")
+        self.theta = tf.Variable(self.theta, trainable=True, name="theta")
+        self.rot_theta = tf.Variable(self.rot_theta, trainable=True, name="rot_theta")
+        self.sigma_theta = tf.Variable(self.sigma_theta, trainable=True, name="sigma_theta")
 
     def _check_parameter_length(self, *args):
         for arg in args:
@@ -234,12 +238,16 @@ class RandomGabor(GaborLayer):
         self.size = size
         self.Nrows, self.Ncols = size, size
         self.fs = self.Ncols
-
+        self.build(())
+        
+    def build(self,
+              input_shape, # Input shape to the layer.
+              ):
         self.imean = tf.Variable(0.5, trainable=True, name="imean")
         self.jmean = tf.Variable(0.5, trainable=True, name="jmean")
-        self.sigma_i = tf.Variable(np.random.uniform(0, self.Nrows/self.fs, n_gabors), trainable=True, name="sigma_i")
-        self.sigma_j = tf.Variable(np.random.uniform(0, self.Ncols/self.fs, n_gabors), trainable=True, name="sigma_j")
-        self.freq = tf.Variable(np.random.uniform(0, self.fs, n_gabors), trainable=True, name="freq")
-        self.theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="theta")
-        self.rot_theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="rot_theta")
-        self.sigma_theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="sigma_theta")
+        self.sigma_i = tf.Variable(np.random.uniform(0, self.Nrows/self.fs, self.n_gabors), trainable=True, name="sigma_i")
+        self.sigma_j = tf.Variable(np.random.uniform(0, self.Ncols/self.fs, self.n_gabors), trainable=True, name="sigma_j")
+        self.freq = tf.Variable(np.random.uniform(0, self.fs, self.n_gabors), trainable=True, name="freq")
+        self.theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="theta")
+        self.rot_theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="rot_theta")
+        self.sigma_theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="sigma_theta")

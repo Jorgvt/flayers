@@ -303,12 +303,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>&lt;dtype: 'int32'&gt; &lt;dtype: 'float32'&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-14 10:15:15.285025: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-2022-09-14 10:15:15.285095: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: megatron
-2022-09-14 10:15:15.285109: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: megatron
-2022-09-14 10:15:15.285246: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 470.57.2
-2022-09-14 10:15:15.285298: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 470.57.2
-2022-09-14 10:15:15.285310: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 470.57.2</code></pre>
+<pre><code>2022-09-16 11:43:14.586643: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+2022-09-16 11:43:14.586739: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: megatron
+2022-09-16 11:43:14.586757: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: megatron
+2022-09-16 11:43:14.587233: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 470.57.2
+2022-09-16 11:43:14.587292: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 470.57.2
+2022-09-16 11:43:14.587308: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 470.57.2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -446,7 +446,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(gabor)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-14 10:15:16.577480: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)</code></pre>
+<pre><code>2022-09-16 11:43:16.076019: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="00_layers_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
@@ -575,9 +575,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, rot_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, sigma_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-14 10:15:18.653420: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-14 10:15:18.654478: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-14 10:15:18.655449: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
+<pre><code>2022-09-16 11:43:18.319200: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-16 11:43:18.320410: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-16 11:43:18.321538: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
@@ -605,9 +605,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-14 10:15:19.839502: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-14 10:15:19.840573: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-14 10:15:19.841554: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
+<pre><code>2022-09-16 11:43:19.689134: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-16 11:43:19.690313: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-16 11:43:19.691454: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
@@ -641,7 +641,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> GaborLayer(<span class="dv">1</span>, <span class="dv">20</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, [<span class="dv">1</span>], [<span class="dv">1</span>], [<span class="dv">1</span>], [<span class="dv">1</span>], [<span class="dv">1</span>], [<span class="dv">1</span>], [<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L163" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L167" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="gaborlayer.call" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer.call">GaborLayer.call</h3>
@@ -693,7 +693,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>It can be helpful to implement a method to show the Gabor filters that are being used by the layer:</p>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L179" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L183" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="gaborlayer.show_filters" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer.show_filters">GaborLayer.show_filters</h3>
@@ -718,25 +718,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> output <span class="op">-</span> output<span class="op">**</span><span class="dv">2</span></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING:tensorflow:5 out of the last 5 calls to &lt;function create_multiple_different_rot_gabor_tf&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has experimental_relax_shapes=True option that relaxes argument shapes that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.</code></pre>
+</div>
 <div class="cell-output cell-output-display">
-<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=-44292210.0&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=12047717.0&gt;,
+<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=-43833970.0&gt;,
+ &lt;tf.Tensor: shape=(), dtype=float32, numpy=11973829.0&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-4.6640164e+04, -8.1807392e+07, -1.4079159e+05, -1.2425600e+08],
+ array([-4.4826762e+04, -8.1054888e+07, -1.3009065e+05, -1.2310460e+08],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-4.6981230e+04, -8.1834672e+07, -1.3268044e+05, -1.2433401e+08],
+ array([-4.5973793e+04, -8.1038384e+07, -1.3298608e+05, -1.2314833e+08],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-9.2944937e+00, -2.6185302e+05, -2.2824429e+03, -6.3666250e+06],
+ array([-8.9319868e+00, -2.5944438e+05, -2.1089885e+03, -6.3076275e+06],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([ 8.6009467e-01, -9.6875000e+02,  1.1099043e+03, -8.2623000e+05],
+ array([-1.7310761e+00, -1.1437500e+03, -8.6465820e+02, -8.2941200e+05],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-8.5969925e-01,  9.6850000e+02, -1.1098975e+03,  8.2623300e+05],
+ array([1.7317734e+00, 1.1440000e+03, 8.6464062e+02, 8.2941175e+05],
        dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 0.        ,  0.        , -0.00195312,  1.        ], dtype=float32)&gt;]</code></pre>
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
+ array([0.000000e+00, 0.000000e+00, 9.765625e-04, 1.000000e+00],
+       dtype=float32)&gt;]</code></pre>
 </div>
 </div>
 </section>
@@ -747,7 +752,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Insted of defining ourselves the initial values, we can randomly initialize them. This can speed up our testing.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L194" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L198" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="create_simple_random_set" class="level3">
 <h3 class="anchored" data-anchor-id="create_simple_random_set">create_simple_random_set</h3>
 <blockquote class="blockquote">
@@ -773,17 +778,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>gabors <span class="op">=</span> create_simple_random_set(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>gabors <span class="op">=</span> create_simple_random_set(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gabor_filter, ax <span class="kw">in</span> <span class="bu">zip</span>(gabors, axes.ravel()):</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(gabor_filter)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gabor_filter, ax <span class="kw">in</span> <span class="bu">zip</span>(gabors, axes.ravel()):</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(gabor_filter)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="00_layers_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
 </div>
@@ -796,7 +801,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Actually, we can define a different layer that initializes almost all of its parameters randomly by inhereting from <a href="https://Jorgvt.github.io/flayers/layers.html#gaborlayer"><code>GaborLayer</code></a>.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L223" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L227" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="randomgabor-1" class="level3">
 <h3 class="anchored" data-anchor-id="randomgabor-1">RandomGabor</h3>
 <blockquote class="blockquote">
@@ -804,53 +809,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>Randomly initialized Gabor layer that is trainable through backpropagation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can check that the <code>.call()</code> method from <a href="https://Jorgvt.github.io/flayers/layers.html#gaborlayer"><code>GaborLayer</code></a> still works:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sample_input <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">1</span>))</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>sample_output <span class="op">=</span> gaborlayer(sample_input).numpy()</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_input.shape[<span class="dv">1</span>:<span class="dv">3</span>] <span class="op">==</span> sample_output.shape[<span class="dv">1</span>:<span class="dv">3</span>]</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_output.shape[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">4</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].imshow(sample_input.squeeze())</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(sample_output.squeeze())</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Input"</span>)</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Output"</span>)</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>sample_input <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">1</span>))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>sample_output <span class="op">=</span> gaborlayer(sample_input).numpy()</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_input.shape[<span class="dv">1</span>:<span class="dv">3</span>] <span class="op">==</span> sample_output.shape[<span class="dv">1</span>:<span class="dv">3</span>]</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_output.shape[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">4</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].imshow(sample_input.squeeze())</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(sample_output.squeeze())</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Input"</span>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Output"</span>)</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING:tensorflow:6 out of the last 6 calls to &lt;function create_multiple_different_rot_gabor_tf&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has experimental_relax_shapes=True option that relaxes argument shapes that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="00_layers_files/figure-html/cell-25-output-2.png" class="img-fluid"></p>
+<p><img src="00_layers_files/figure-html/cell-25-output-3.png" class="img-fluid"></p>
 </div>
 </div>
 <p>Ensure that we can still plot its filters:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>gaborlayer.show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># gaborlayer.build((None))</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>gaborlayer.show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="00_layers_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We can check that the parameters are trainable and thus the gradient is propagated properly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape:</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> gaborlayer(sample_input)</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> output <span class="op">-</span> output<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape:</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> gaborlayer(sample_input)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> output <span class="op">-</span> output<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=-106343.39&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=91521.28&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-13740.87402344, -44104.23828125, -21713.21679688, -19831.44921875])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-32583.77929688, -11432.28710938,  -4077.08227539, -32302.77539062])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([  1810.35876465,   6409.01904297, -21779.10742188,  -7655.59228516])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-90639.3515625 , 135911.        , 149277.640625  ,  28256.85351562])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([  90963.90625 , -136858.09375 , -149574.921875,  -28353.78125 ])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-324.62695312,  947.14526367,  297.30041504,   96.82617188])&gt;]</code></pre>
+<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=5614463.0&gt;,
+ &lt;tf.Tensor: shape=(), dtype=float32, numpy=179658.38&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
+ array([ -46651.328125  , -254719.390625  ,  -16486.13085938,
+         -98107.3984375 ])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
+ array([ -35617.1171875 , 1283816.5       ,  -81988.28125   ,
+          -8162.18798828])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([ -2562.07250977, 220360.84375   ,  -4588.00878906,  -3300.6184082 ])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
+ array([  -64005.05078125, 19074392.        ,   -46604.0703125 ,
+          -36367.8984375 ])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
+ array([    64021.51171875, -19249096.        ,     47432.5       ,
+            36380.609375  ])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-1.63461914e+01,  1.74703188e+05, -8.28400391e+02, -1.24721680e+01])&gt;]</code></pre>
 </div>
 </div>
 
