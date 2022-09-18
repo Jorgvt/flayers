@@ -319,21 +319,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model: "sequential_4"
+<pre><code>Model: "sequential_1"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-gabor_layer_5 (GaborLayer)   (None, 28, 28, 4)         26        
+gabor_layer_1 (GaborLayer)   (None, 28, 28, 4)         1626      
 _________________________________________________________________
-max_pooling2d_4 (MaxPooling2 (None, 14, 14, 4)         0         
+max_pooling2d_1 (MaxPooling2 (None, 14, 14, 4)         0         
 _________________________________________________________________
-global_average_pooling2d_4 ( (None, 4)                 0         
+global_average_pooling2d_1 ( (None, 4)                 0         
 _________________________________________________________________
-dense_4 (Dense)              (None, 10)                50        
+dense_1 (Dense)              (None, 10)                50        
 =================================================================
-Total params: 76
+Total params: 1,676
 Trainable params: 76
-Non-trainable params: 0
+Non-trainable params: 1,600
 _________________________________________________________________</code></pre>
 </div>
 </div>
@@ -345,18 +345,9 @@ _________________________________________________________________</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X_train, Y_train, batch_size<span class="op">=</span><span class="dv">128</span>, epochs<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X_train, Y_train, batch_size<span class="op">=</span><span class="dv">128</span>, epochs<span class="op">=</span><span class="dv">1</span>, validation_split<span class="op">=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch 1/5
-469/469 [==============================] - 17s 28ms/step - loss: 2.3227 - accuracy: 0.1088
-Epoch 2/5
-469/469 [==============================] - 13s 28ms/step - loss: 2.2425 - accuracy: 0.1522
-Epoch 3/5
-469/469 [==============================] - 13s 28ms/step - loss: 1.9368 - accuracy: 0.3259
-Epoch 4/5
-469/469 [==============================] - 13s 28ms/step - loss: 1.7845 - accuracy: 0.3729
-Epoch 5/5
-469/469 [==============================] - 13s 28ms/step - loss: 1.7038 - accuracy: 0.3982</code></pre>
+<pre><code>375/375 [==============================] - 17s 33ms/step - loss: 2.2897 - accuracy: 0.1481 - val_loss: 2.2693 - val_accuracy: 0.1996</code></pre>
 </div>
 </div>
 <p>We can visualize the gabor filters after the training process:</p>
@@ -370,20 +361,19 @@ Epoch 5/5
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">0</span>].theta.numpy()<span class="op">*</span><span class="dv">180</span><span class="op">/</span>np.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>array([ 1.1418808e-02,  9.1543541e+01, -3.3004951e+00,  9.3963242e+01],
-      dtype=float32)</code></pre>
+<pre><code>array([-1.3238928, 90.20859  , -2.235493 , 88.482956 ], dtype=float32)</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">0</span>].rot_theta.numpy()<span class="op">*</span><span class="dv">180</span><span class="op">/</span>np.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>array([-0.66917044, -1.573621  ,  4.7601485 , -2.2281935 ], dtype=float32)</code></pre>
+<pre><code>array([-1.3243861 ,  0.27530777,  2.329611  , -1.5420123 ], dtype=float32)</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model.layers[<span class="dv">0</span>].sigma_theta.numpy()<span class="op">*</span><span class="dv">180</span><span class="op">/</span>np.pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>array([ 12.963239,  16.60231 , -19.626122,  -2.529321], dtype=float32)</code></pre>
+<pre><code>array([-1.3520143, -4.6940336,  5.102634 , -1.5307682], dtype=float32)</code></pre>
 </div>
 </div>
 
