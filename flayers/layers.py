@@ -8,7 +8,7 @@ __all__ = ['gabor_2d_tf', 'create_gabor_rot_tf', 'create_multiple_different_rot_
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-import tensorflow.keras.backend as K
+from tensorflow.keras.constraints import NonNeg
 
 from einops import rearrange, repeat, reduce
 
@@ -152,14 +152,14 @@ class GaborLayer(tf.keras.layers.Layer):
     def build(self,
               input_shape, # Input's shape to the layer.
               ):
-        self.imean = tf.Variable(self.imean, trainable=True, name="imean")
-        self.jmean = tf.Variable(self.jmean, trainable=True, name="jmean")
-        self.sigma_i = tf.Variable(self.sigma_i, trainable=True, name="sigma_i")
-        self.sigma_j = tf.Variable(self.sigma_j, trainable=True, name="sigma_j")
-        self.freq = tf.Variable(self.freq, trainable=True, name="freq")
-        self.theta = tf.Variable(self.theta, trainable=True, name="theta")
-        self.rot_theta = tf.Variable(self.rot_theta, trainable=True, name="rot_theta")
-        self.sigma_theta = tf.Variable(self.sigma_theta, trainable=True, name="sigma_theta")
+        self.imean = tf.Variable(self.imean, trainable=True, name="imean", constraint=NonNeg())
+        self.jmean = tf.Variable(self.jmean, trainable=True, name="jmean", constraint=NonNeg())
+        self.sigma_i = tf.Variable(self.sigma_i, trainable=True, name="sigma_i", constraint=NonNeg())
+        self.sigma_j = tf.Variable(self.sigma_j, trainable=True, name="sigma_j", constraint=NonNeg())
+        self.freq = tf.Variable(self.freq, trainable=True, name="freq", constraint=NonNeg())
+        self.theta = tf.Variable(self.theta, trainable=True, name="theta", constraint=NonNeg())
+        self.rot_theta = tf.Variable(self.rot_theta, trainable=True, name="rot_theta", constraint=NonNeg())
+        self.sigma_theta = tf.Variable(self.sigma_theta, trainable=True, name="sigma_theta", constraint=NonNeg())
 
     def _check_parameter_length(self, *args):
         for arg in args:
@@ -167,9 +167,6 @@ class GaborLayer(tf.keras.layers.Layer):
 
 
 # %% ../Notebooks/00_layers.ipynb 28
-from warnings import filters
-
-
 @patch
 def call(self: GaborLayer, 
          inputs, # Inputs to the layer.
@@ -259,14 +256,14 @@ class RandomGabor(GaborLayer):
     def build(self,
               input_shape, # Input shape to the layer.
               ):
-        self.imean = tf.Variable(0.5, trainable=True, name="imean")
-        self.jmean = tf.Variable(0.5, trainable=True, name="jmean")
-        self.sigma_i = tf.Variable(np.random.uniform(0, self.Nrows/self.fs, self.n_gabors), trainable=True, name="sigma_i")
-        self.sigma_j = tf.Variable(np.random.uniform(0, self.Ncols/self.fs, self.n_gabors), trainable=True, name="sigma_j")
-        self.freq = tf.Variable(np.random.uniform(0, self.fs, self.n_gabors), trainable=True, name="freq")
-        self.theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="theta")
-        self.rot_theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="rot_theta")
-        self.sigma_theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="sigma_theta")
+        self.imean = tf.Variable(0.5, trainable=True, name="imean", constraint=NonNeg())
+        self.jmean = tf.Variable(0.5, trainable=True, name="jmean", constraint=NonNeg())
+        self.sigma_i = tf.Variable(np.random.uniform(0, self.Nrows/self.fs, self.n_gabors), trainable=True, name="sigma_i", constraint=NonNeg())
+        self.sigma_j = tf.Variable(np.random.uniform(0, self.Ncols/self.fs, self.n_gabors), trainable=True, name="sigma_j", constraint=NonNeg())
+        self.freq = tf.Variable(np.random.uniform(0, self.fs, self.n_gabors), trainable=True, name="freq", constraint=NonNeg())
+        self.theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="theta", constraint=NonNeg())
+        self.rot_theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="rot_theta", constraint=NonNeg())
+        self.sigma_theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="sigma_theta", constraint=NonNeg())
     
     def _initialize_variables(self):
         """

@@ -647,7 +647,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L174" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L171" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="gaborlayer.call" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer.call">GaborLayer.call</h3>
@@ -702,21 +702,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model: "sequential_11"
+<pre><code>Model: "sequential_13"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-gabor_layer_54 (GaborLayer)  (None, 28, 28, 4)         1626      
+gabor_layer_63 (GaborLayer)  (None, 28, 28, 4)         1626      
 _________________________________________________________________
-max_pooling2d_11 (MaxPooling (None, 14, 14, 4)         0         
+max_pooling2d_13 (MaxPooling (None, 14, 14, 4)         0         
 _________________________________________________________________
-global_average_pooling2d_11  (None, 4)                 0         
+global_average_pooling2d_13  (None, 4)                 0         
 _________________________________________________________________
-dense_11 (Dense)             (None, 10)                50        
+dense_13 (Dense)             (None, 10)                50        
 =================================================================
 Total params: 1,676
-Trainable params: 1,676
-Non-trainable params: 0
+Trainable params: 76
+Non-trainable params: 1,600
 _________________________________________________________________</code></pre>
 </div>
 </div>
@@ -750,7 +750,7 @@ _________________________________________________________________</code></pre>
 </div>
 <p>It can be helpful to implement a method to show the Gabor filters that are being used by the layer:</p>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L194" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L191" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="gaborlayer.show_filters" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer.show_filters">GaborLayer.show_filters</h3>
@@ -810,7 +810,7 @@ _________________________________________________________________</code></pre>
 <p>Insted of defining ourselves the initial values, we can randomly initialize them. This can speed up our testing.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L210" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L207" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="create_simple_random_set" class="level3">
 <h3 class="anchored" data-anchor-id="create_simple_random_set">create_simple_random_set</h3>
 <blockquote class="blockquote">
@@ -859,7 +859,7 @@ _________________________________________________________________</code></pre>
 <p>Actually, we can define a different layer that initializes almost all of its parameters randomly by inhereting from <a href="https://Jorgvt.github.io/flayers/layers.html#gaborlayer"><code>GaborLayer</code></a>.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L239" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L236" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="randomgabor-1" class="level3">
 <h3 class="anchored" data-anchor-id="randomgabor-1">RandomGabor</h3>
 <blockquote class="blockquote">
@@ -882,21 +882,21 @@ _________________________________________________________________</code></pre>
 <span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
 <span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model: "sequential_5"
+<pre><code>Model: "sequential_14"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-random_gabor_1 (RandomGabor) (None, 28, 28, 4)         26        
+random_gabor_5 (RandomGabor) (None, 28, 28, 4)         1626      
 _________________________________________________________________
-max_pooling2d_5 (MaxPooling2 (None, 14, 14, 4)         0         
+max_pooling2d_14 (MaxPooling (None, 14, 14, 4)         0         
 _________________________________________________________________
-global_average_pooling2d_5 ( (None, 4)                 0         
+global_average_pooling2d_14  (None, 4)                 0         
 _________________________________________________________________
-dense_5 (Dense)              (None, 10)                50        
+dense_14 (Dense)             (None, 10)                50        
 =================================================================
-Total params: 76
+Total params: 1,676
 Trainable params: 76
-Non-trainable params: 0
+Non-trainable params: 1,600
 _________________________________________________________________</code></pre>
 </div>
 </div>
@@ -937,18 +937,20 @@ _________________________________________________________________</code></pre>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=88487.09&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=63266.75&gt;,
+<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=5632598.0&gt;,
+ &lt;tf.Tensor: shape=(), dtype=float32, numpy=4581247.0&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
- array([ -30387.69140625, -108846.3671875 ,  -25116.34765625,
-         -24568.51367188])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-16049.48046875,  -7772.35839844, -36636.97265625,  -7723.68212891])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([  9017.85644531,  -3504.79199219,    499.91851807, -14215.51464844])&gt;,
+ array([  -12018.80664062,    -9618.95214844, -8165404.        ,
+          -10989.21484375])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-9.18278613e+03, -1.11076352e+05, -1.90313168e+08, -1.13267520e+04])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([6.11027002e+03, 3.57489233e+03, 1.04624810e+07, 6.41492188e+02])&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
- array([ -64539.34375   ,   -3501.21972656,   66865.9765625 ,
-        -137489.15625   ])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([ 64646.48046875,  13427.88671875, -67028.078125  , 138312.15625   ])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([ -107.27429199, -9926.63671875,   162.11962891,  -822.64599609])&gt;]</code></pre>
+ array([  -36638.73828125,     6081.71533203, -4885225.        ,
+          -53428.578125  ])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
+ array([  36581.2890625 ,   -7338.52148438, 4051663.        ,
+          53407.140625  ])&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([5.78063965e+01, 1.25680664e+03, 8.33564000e+05, 2.14438477e+01])&gt;]</code></pre>
 </div>
 </div>
 
