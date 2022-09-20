@@ -184,6 +184,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../layers.html" class="sidebar-item-text sidebar-link">Layers</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../center_surround.html" class="sidebar-item-text sidebar-link">Center surround</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../constraints.html" class="sidebar-item-text sidebar-link">Constraints</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Experiments</a>
@@ -310,9 +320,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-18 20:40:35.641860: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 5435 MB memory:  -&gt; device: 0, name: NVIDIA GeForce GTX TITAN Black, pci bus id: 0000:83:00.0, compute capability: 3.5
-2022-09-18 20:40:38.199514: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)
-2022-09-18 20:40:38.448389: I tensorflow/core/util/cuda_solvers.cc:180] Creating CudaSolver handles for stream 0x5593d80c8c50</code></pre>
+<pre><code>2022-09-18 23:02:18.375631: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1510] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 5290 MB memory:  -&gt; device: 0, name: NVIDIA GeForce GTX TITAN Black, pci bus id: 0000:83:00.0, compute capability: 3.5
+2022-09-18 23:02:21.015730: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)
+2022-09-18 23:02:21.299468: I tensorflow/core/util/cuda_solvers.cc:180] Creating CudaSolver handles for stream 0x5595438552e0</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model: "sequential"
@@ -343,11 +353,11 @@ _________________________________________________________________</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>history <span class="op">=</span> model.fit(X_train, Y_train, batch_size<span class="op">=</span><span class="dv">128</span>, epochs<span class="op">=</span><span class="dv">1</span>, validation_split<span class="op">=</span><span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-18 20:40:46.814902: I tensorflow/stream_executor/cuda/cuda_dnn.cc:369] Loaded cuDNN version 8100
-2022-09-18 20:40:47.278446: I tensorflow/core/platform/default/subprocess.cc:304] Start cannot spawn child process: No such file or directory</code></pre>
+<pre><code>2022-09-18 23:02:30.164449: I tensorflow/stream_executor/cuda/cuda_dnn.cc:369] Loaded cuDNN version 8100
+2022-09-18 23:02:30.665826: I tensorflow/core/platform/default/subprocess.cc:304] Start cannot spawn child process: No such file or directory</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>375/375 [==============================] - 18s 33ms/step - loss: 2.3170 - accuracy: 0.0858 - val_loss: 2.2855 - val_accuracy: 0.1058</code></pre>
+<pre><code>375/375 [==============================] - 21s 38ms/step - loss: 2.3070 - accuracy: 0.1080 - val_loss: 2.2878 - val_accuracy: 0.1509</code></pre>
 </div>
 </div>
 <p>We can visualize the gabor filters after the training process:</p>

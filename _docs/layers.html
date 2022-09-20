@@ -184,6 +184,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./layers.html" class="sidebar-item-text sidebar-link active">Layers</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./center_surround.html" class="sidebar-item-text sidebar-link">Center surround</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./constraints.html" class="sidebar-item-text sidebar-link">Constraints</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Experiments</a>
@@ -303,12 +313,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>&lt;dtype: 'int32'&gt; &lt;dtype: 'float32'&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-18 18:39:28.724915: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-2022-09-18 18:39:28.724989: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: megatron
-2022-09-18 18:39:28.725005: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: megatron
-2022-09-18 18:39:28.725164: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 470.57.2
-2022-09-18 18:39:28.725215: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 470.57.2
-2022-09-18 18:39:28.725230: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 470.57.2</code></pre>
+<pre><code>2022-09-20 12:35:22.979033: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+2022-09-20 12:35:22.979117: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: megatron
+2022-09-20 12:35:22.979137: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: megatron
+2022-09-20 12:35:22.979295: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 470.57.2
+2022-09-20 12:35:22.979361: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 470.57.2
+2022-09-20 12:35:22.979377: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 470.57.2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -324,7 +334,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="creating-a-gabor-filter-in-tensorflow">Creating a Gabor filter in <code>TensorFlow</code></h2>
 <p>First of all we need to be able to generate Gabor filters as <code>Tensorflow</code> <code>Tensor</code>:</p>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L23" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L24" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="gabor_2d_tf" class="level3">
 <h3 class="anchored" data-anchor-id="gabor_2d_tf">gabor_2d_tf</h3>
 <blockquote class="blockquote">
@@ -378,7 +388,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L53" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L54" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="create_gabor_rot_tf" class="level3">
 <h3 class="anchored" data-anchor-id="create_gabor_rot_tf">create_gabor_rot_tf</h3>
@@ -446,7 +456,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(gabor)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-18 18:39:35.838764: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)</code></pre>
+<pre><code>2022-09-20 12:35:24.252491: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="00_layers_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
@@ -461,7 +471,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>In plain Python, if we wanted to create a set of filters we could initialize an empty array or list and fill it with the different filters generated inside a <code>for</code> loop, but we can’t do that inside a <code>tf.function</code> because <code>Tensorflow</code> tries to build the computational graph and starts to nest graphs inside graphs and the performance is terrible. Luckily for us, they implement a <code>tf.TensorArray</code> that can be used inside a <code>tf.function</code> to this effect.</p>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L86" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L87" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="create_multiple_different_rot_gabor_tf" class="level3">
 <h3 class="anchored" data-anchor-id="create_multiple_different_rot_gabor_tf">create_multiple_different_rot_gabor_tf</h3>
 <blockquote class="blockquote">
@@ -575,9 +585,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, rot_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, sigma_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-18 18:39:38.786702: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-18 18:39:38.787914: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-18 18:39:38.789038: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
+<pre><code>2022-09-20 12:35:26.542940: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-20 12:35:26.545272: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-20 12:35:26.547083: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
@@ -605,9 +615,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-18 18:39:40.272410: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-18 18:39:40.273584: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-18 18:39:40.275080: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
+<pre><code>2022-09-20 12:35:28.025355: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-20 12:35:28.026635: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-20 12:35:28.027776: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
@@ -631,7 +641,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>The Gabor filters are stored in the <code>GaborLayer.filters</code> attribute and while they are re-calculated at each step of training (as should be), they are not re-calculated during inference. At inference time, the last calculated filters are used.</p>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L120" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L121" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="gaborlayer" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer">GaborLayer</h3>
 <blockquote class="blockquote">
@@ -641,13 +651,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>               theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>, input_shape<span class="op">=</span>(<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>))</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>a.filters.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<pre><code>TensorShape([4, 20, 20])</code></pre>
-</div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a.filters.shape</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L171" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L185" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="gaborlayer.call" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer.call">GaborLayer.call</h3>
@@ -656,6 +663,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>Build a set of filters from the stored values and convolve them with the input.</p>
 <table class="table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 25%">
+<col style="width: 34%">
+<col style="width: 34%">
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -675,44 +688,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>training</td>
 <td>bool</td>
 <td>False</td>
-<td>Wether we are in training or inference.</td>
+<td>Flag indicating if we are training the layer or using it for inference.</td>
 </tr>
 </tbody>
 </table>
 <p>It’s important to check if we can use it in a model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>n_gabors <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sigma_i <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>]<span class="op">*</span><span class="dv">2</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>sigma_j <span class="op">=</span> [<span class="fl">0.2</span>, <span class="fl">0.1</span>]<span class="op">*</span><span class="dv">2</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">10</span>]<span class="op">*</span><span class="dv">2</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> [<span class="dv">0</span>, np.pi<span class="op">/</span><span class="dv">2</span>]<span class="op">*</span><span class="dv">2</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>rot_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>sigma_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>n_gabors <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>sigma_i <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>sigma_j <span class="op">=</span> [<span class="fl">0.2</span>, <span class="fl">0.1</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">10</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> [<span class="dv">0</span>, np.pi<span class="op">/</span><span class="dv">2</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>rot_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>sigma_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">0</span>]<span class="op">*</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential([</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>               theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>, input_shape<span class="op">=</span>(<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>)),</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    layers.MaxPool2D(<span class="dv">2</span>),</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    layers.GlobalAveragePooling2D(),</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    layers.Dense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">"adam"</span>,</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>              loss<span class="op">=</span><span class="st">"sparse_categorical_crossentropy"</span>,</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential([</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>               theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>, input_shape<span class="op">=</span>(<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>)),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    layers.MaxPool2D(<span class="dv">2</span>),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    layers.GlobalAveragePooling2D(),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    layers.Dense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">"adam"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>              loss<span class="op">=</span><span class="st">"sparse_categorical_crossentropy"</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model: "sequential_13"
+<pre><code>Model: "sequential"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-gabor_layer_63 (GaborLayer)  (None, 28, 28, 4)         1626      
+gabor_layer_1 (GaborLayer)   (None, 28, 28, 4)         1626      
 _________________________________________________________________
-max_pooling2d_13 (MaxPooling (None, 14, 14, 4)         0         
+max_pooling2d (MaxPooling2D) (None, 14, 14, 4)         0         
 _________________________________________________________________
-global_average_pooling2d_13  (None, 4)                 0         
+global_average_pooling2d (Gl (None, 4)                 0         
 _________________________________________________________________
-dense_13 (Dense)             (None, 10)                50        
+dense (Dense)                (None, 10)                50        
 =================================================================
 Total params: 1,676
 Trainable params: 76
@@ -721,26 +734,26 @@ _________________________________________________________________</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>n_gabors <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>sigma_i <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>]</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>sigma_j <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>]</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">135</span>]</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>rot_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">135</span>]</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>sigma_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">135</span>]</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>                        theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>sample_input <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">1</span>))</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>sample_output <span class="op">=</span> gaborlayer(sample_input).numpy()</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_input.shape[<span class="dv">1</span>:<span class="dv">3</span>] <span class="op">==</span> sample_output.shape[<span class="dv">1</span>:<span class="dv">3</span>]</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_output.shape[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">4</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].imshow(sample_input.squeeze())</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(sample_output.squeeze())</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Input"</span>)</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Output"</span>)</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>n_gabors <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>sigma_i <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>]</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>sigma_j <span class="op">=</span> [<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>]</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>freq <span class="op">=</span> [<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>]</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">135</span>]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>rot_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">135</span>]</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>sigma_theta <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">135</span>]</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>                        theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>sample_input <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">1</span>))</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>sample_output <span class="op">=</span> gaborlayer(sample_input).numpy()</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_input.shape[<span class="dv">1</span>:<span class="dv">3</span>] <span class="op">==</span> sample_output.shape[<span class="dv">1</span>:<span class="dv">3</span>]</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_output.shape[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">4</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].imshow(sample_input.squeeze())</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(sample_output.squeeze())</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Input"</span>)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Output"</span>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).</code></pre>
 </div>
@@ -750,7 +763,7 @@ _________________________________________________________________</code></pre>
 </div>
 <p>It can be helpful to implement a method to show the Gabor filters that are being used by the layer:</p>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L191" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L207" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="gaborlayer.show_filters" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer.show_filters">GaborLayer.show_filters</h3>
@@ -759,11 +772,14 @@ _________________________________________________________________</code></pre>
 </blockquote>
 <p>Calculates and plots the filters corresponding to the stored parameters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                        theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>gaborlayer.show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> GaborLayer(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, imean<span class="op">=</span><span class="fl">0.5</span>, jmean<span class="op">=</span><span class="fl">0.5</span>, sigma_i<span class="op">=</span>sigma_i, sigma_j<span class="op">=</span>sigma_j, freq<span class="op">=</span>freq, </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>                        theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>gaborlayer.show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING:tensorflow:5 out of the last 5 calls to &lt;function create_multiple_different_rot_gabor_tf&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has experimental_relax_shapes=True option that relaxes argument shapes that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.</code></pre>
+</div>
 <div class="cell-output cell-output-display">
-<p><img src="00_layers_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<p><img src="00_layers_files/figure-html/cell-20-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We can check that the parameters are trainable and thus the gradient is propagated properly:</p>
@@ -780,26 +796,28 @@ _________________________________________________________________</code></pre>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> output <span class="op">-</span> output<span class="op">**</span><span class="dv">2</span></span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>WARNING:tensorflow:6 out of the last 6 calls to &lt;function create_multiple_different_rot_gabor_tf&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has experimental_relax_shapes=True option that relaxes argument shapes that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.</code></pre>
+</div>
 <div class="cell-output cell-output-display">
-<pre><code>[None,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=-44188092.0&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=11944781.0&gt;,
+<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=-44429500.0&gt;,
+ &lt;tf.Tensor: shape=(), dtype=float32, numpy=12127090.0&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-4.4967977e+04, -8.1415464e+07, -1.2753630e+05, -1.2364966e+08],
+ array([-4.42353867e+04, -8.19999920e+07, -1.21842125e+05, -1.24557440e+08],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-4.6944172e+04, -8.1406728e+07, -1.2998617e+05, -1.2369380e+08],
+ array([-4.64066523e+04, -8.19875920e+07, -1.24588711e+05, -1.24616856e+08],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-8.9602194e+00, -2.6059862e+05, -2.0675889e+03, -6.3355555e+06],
+ array([-8.8135223e+00, -2.6246947e+05, -1.9752870e+03, -6.3820720e+06],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-3.2022424e+00, -1.2725000e+03,  2.4127266e+03, -8.2847000e+05],
+ array([ 3.5485029e-02, -9.0675000e+02,  3.3405488e+03, -8.2995800e+05],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([ 3.2016296e+00,  1.2710000e+03, -2.4127344e+03,  8.2846950e+05],
+ array([-3.6406517e-02,  9.0700000e+02, -3.3405557e+03,  8.2996025e+05],
        dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 0. ,  0.5,  0. , -0.5], dtype=float32)&gt;]</code></pre>
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 0.        ,  0.5       ,  0.00097656, -0.5       ], dtype=float32)&gt;]</code></pre>
 </div>
 </div>
 </section>
@@ -810,7 +828,7 @@ _________________________________________________________________</code></pre>
 <p>Insted of defining ourselves the initial values, we can randomly initialize them. This can speed up our testing.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L207" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L225" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="create_simple_random_set" class="level3">
 <h3 class="anchored" data-anchor-id="create_simple_random_set">create_simple_random_set</h3>
 <blockquote class="blockquote">
@@ -836,17 +854,17 @@ _________________________________________________________________</code></pre>
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>gabors <span class="op">=</span> create_simple_random_set(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>gabors <span class="op">=</span> create_simple_random_set(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gabor_filter, ax <span class="kw">in</span> <span class="bu">zip</span>(gabors, axes.ravel()):</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(gabor_filter)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> gabor_filter, ax <span class="kw">in</span> <span class="bu">zip</span>(gabors, axes.ravel()):</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    ax.imshow(gabor_filter)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="00_layers_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
 </div>
@@ -859,7 +877,7 @@ _________________________________________________________________</code></pre>
 <p>Actually, we can define a different layer that initializes almost all of its parameters randomly by inhereting from <a href="https://Jorgvt.github.io/flayers/layers.html#gaborlayer"><code>GaborLayer</code></a>.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L236" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L254" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="randomgabor-1" class="level3">
 <h3 class="anchored" data-anchor-id="randomgabor-1">RandomGabor</h3>
 <blockquote class="blockquote">
@@ -867,32 +885,32 @@ _________________________________________________________________</code></pre>
 </blockquote>
 <p>Randomly initialized Gabor layer that is trainable through backpropagation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It’s important to check if we can use it in a model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential([</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    RandomGabor(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, input_shape<span class="op">=</span>(<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>)),</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    layers.MaxPool2D(<span class="dv">2</span>),</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    layers.GlobalAveragePooling2D(),</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    layers.Dense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">"adam"</span>,</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>              loss<span class="op">=</span><span class="st">"sparse_categorical_crossentropy"</span>,</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> tf.keras.Sequential([</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    RandomGabor(n_gabors<span class="op">=</span>n_gabors, size<span class="op">=</span><span class="dv">20</span>, input_shape<span class="op">=</span>(<span class="dv">28</span>,<span class="dv">28</span>,<span class="dv">1</span>)),</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    layers.MaxPool2D(<span class="dv">2</span>),</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    layers.GlobalAveragePooling2D(),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    layers.Dense(<span class="dv">10</span>, activation<span class="op">=</span><span class="st">"softmax"</span>)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">"adam"</span>,</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>              loss<span class="op">=</span><span class="st">"sparse_categorical_crossentropy"</span>,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>              metrics<span class="op">=</span>[<span class="st">"accuracy"</span>])</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>model.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Model: "sequential_14"
+<pre><code>Model: "sequential_1"
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-random_gabor_5 (RandomGabor) (None, 28, 28, 4)         1626      
+random_gabor_4 (RandomGabor) (None, 28, 28, 4)         1626      
 _________________________________________________________________
-max_pooling2d_14 (MaxPooling (None, 14, 14, 4)         0         
+max_pooling2d_1 (MaxPooling2 (None, 14, 14, 4)         0         
 _________________________________________________________________
-global_average_pooling2d_14  (None, 4)                 0         
+global_average_pooling2d_1 ( (None, 4)                 0         
 _________________________________________________________________
-dense_14 (Dense)             (None, 10)                50        
+dense_1 (Dense)              (None, 10)                50        
 =================================================================
 Total params: 1,676
 Trainable params: 76
@@ -902,17 +920,17 @@ _________________________________________________________________</code></pre>
 </div>
 <p>We can check that the <code>.call()</code> method from <a href="https://Jorgvt.github.io/flayers/layers.html#gaborlayer"><code>GaborLayer</code></a> still works:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>sample_input <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">1</span>))</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>sample_output <span class="op">=</span> gaborlayer(sample_input).numpy()</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_input.shape[<span class="dv">1</span>:<span class="dv">3</span>] <span class="op">==</span> sample_output.shape[<span class="dv">1</span>:<span class="dv">3</span>]</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_output.shape[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">4</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].imshow(sample_input.squeeze())</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(sample_output.squeeze())</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Input"</span>)</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Output"</span>)</span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>sample_input <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, size<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">256</span>, <span class="dv">256</span>, <span class="dv">1</span>))</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>sample_output <span class="op">=</span> gaborlayer(sample_input).numpy()</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_input.shape[<span class="dv">1</span>:<span class="dv">3</span>] <span class="op">==</span> sample_output.shape[<span class="dv">1</span>:<span class="dv">3</span>]</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> sample_output.shape[<span class="op">-</span><span class="dv">1</span>] <span class="op">==</span> <span class="dv">4</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].imshow(sample_input.squeeze())</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].imshow(sample_output.squeeze())</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">"Input"</span>)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">"Output"</span>)</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Clipping input data to the valid range for imshow with RGB data ([0..1] for floats or [0..255] for integers).</code></pre>
 </div>
@@ -922,35 +940,33 @@ _________________________________________________________________</code></pre>
 </div>
 <p>Ensure that we can still plot its filters:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>gaborlayer.show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>gaborlayer.show_filters()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="00_layers_files/figure-html/cell-30-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We can check that the parameters are trainable and thus the gradient is propagated properly:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape:</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> gaborlayer(sample_input, training<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> output <span class="op">-</span> output<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>gaborlayer <span class="op">=</span> RandomGabor(n_gabors<span class="op">=</span><span class="dv">4</span>, size<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> tf.GradientTape() <span class="im">as</span> tape:</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> gaborlayer(sample_input, training<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> output <span class="op">-</span> output<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=5632598.0&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=4581247.0&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
- array([  -12018.80664062,    -9618.95214844, -8165404.        ,
-          -10989.21484375])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([-9.18278613e+03, -1.11076352e+05, -1.90313168e+08, -1.13267520e+04])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([6.11027002e+03, 3.57489233e+03, 1.04624810e+07, 6.41492188e+02])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
- array([  -36638.73828125,     6081.71533203, -4885225.        ,
-          -53428.578125  ])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=
- array([  36581.2890625 ,   -7338.52148438, 4051663.        ,
-          53407.140625  ])&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float64, numpy=array([5.78063965e+01, 1.25680664e+03, 8.33564000e+05, 2.14438477e+01])&gt;]</code></pre>
+<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=113917.734&gt;,
+ &lt;tf.Tensor: shape=(), dtype=float32, numpy=-917516.5&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ -5164.865 , 450326.28  ,  -3239.7764, -39325.453 ], dtype=float32)&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
+ array([   83248.89 , -2121896.2  ,  -437151.2  ,   -11192.807],
+       dtype=float32)&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
+ array([ 1.4903282e+03,  2.7136692e+06,  7.4021333e+03, -2.4694915e+03],
+       dtype=float32)&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([-172227.47 ,  150331.88 , -100282.945,  168037.84 ], dtype=float32)&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 149537.19,  -77730.22,  114461.95, -163637.2 ], dtype=float32)&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 22690.408, -72601.56 , -14178.506,  -4400.712], dtype=float32)&gt;]</code></pre>
 </div>
 </div>
 

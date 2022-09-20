@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.constraints import NonNeg
+from .constraints import Positive
 
 from einops import rearrange, repeat, reduce
 
@@ -124,11 +125,11 @@ class GaborLayer(tf.keras.layers.Layer):
     def __init__(self,
                  n_gabors, # Number of Gabor filters
                  size, # Size of the filters (they will be square),
-                 imean, # Horizontal mean *(in degrees)*.
+                 imean, # Horizontal mean *(in degrees)*.
                  jmean, # Vertical mean *(in degrees)*.
                  sigma_i: list, # Horizontal width *(in degrees)*.
                  sigma_j: list, # Vertical width *(in degrees)*.
-                 freq: list, # Frequency.
+                 freq: list, # Frequency.
                  theta: list, # Rotation of the sinusoid **(rad)**.
                  rot_theta: list, # Rotation of the domain **(rad)**.
                  sigma_theta: list, # Rotation of the envelope  **(rad)**.
@@ -136,30 +137,43 @@ class GaborLayer(tf.keras.layers.Layer):
                  **kwargs, # Arguments to be passed to the base `Layer`.
                  ):
         super(GaborLayer, self).__init__(**kwargs)
-        
+
+        # if len(sigma_i) != n_gabors: raise ValueError(f"sigma_i has {len(sigma_i)} values but should have {n_gabors} (n_gabors = {n_gabors}).")
+
         self.n_gabors = n_gabors
         self.size = size
         self.Nrows, self.Ncols = size, size
-        self.fs = self.Ncols
+        self.fs = fs
 
         self._check_parameter_length(sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
         self.imean, self.jmean, self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta = cast_all(imean, jmean, sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
-        self.n_gabors, self.Nrows, self.Ncols, self.fs = cast_all(self.n_gabors, self.Nrows, self.Ncols, self.fs, dtype=tf.int32)
-        self.filters = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
-                                                               freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
-        self.precalc_filters = tf.Variable(self.filters, trainable=False)
         
-    def build(self,
-              input_shape, # Input's shape to the layer.
-              ):
-        self.imean = tf.Variable(self.imean, trainable=True, name="imean", constraint=NonNeg())
-        self.jmean = tf.Variable(self.jmean, trainable=True, name="jmean", constraint=NonNeg())
-        self.sigma_i = tf.Variable(self.sigma_i, trainable=True, name="sigma_i", constraint=NonNeg())
-        self.sigma_j = tf.Variable(self.sigma_j, trainable=True, name="sigma_j", constraint=NonNeg())
-        self.freq = tf.Variable(self.freq, trainable=True, name="freq", constraint=NonNeg())
-        self.theta = tf.Variable(self.theta, trainable=True, name="theta", constraint=NonNeg())
-        self.rot_theta = tf.Variable(self.rot_theta, trainable=True, name="rot_theta", constraint=NonNeg())
-        self.sigma_theta = tf.Variable(self.sigma_theta, trainable=True, name="sigma_theta", constraint=NonNeg())
+    def build(self, input_shape):
+
+        self.imean = tf.Variable(self.imean, trainable=True, name="imean", constraint=Positive())
+        self.jmean = tf.Variable(self.jmean, trainable=True, name="jmean", constraint=Positive())
+
+        # self.sigma_i = tf.Variable(np.random.uniform(0, self.Nrows/self.fs, n_gabors), trainable=True, name="sigma_i")
+        self.sigma_i = tf.Variable(self.sigma_i, trainable=True, name="sigma_i", constraint=Positive())
+
+        # self.sigma_j = tf.Variable(np.random.uniform(0, self.Ncols/self.fs, n_gabors), trainable=True, name="sigma_j")
+        self.sigma_j = tf.Variable(self.sigma_j, trainable=True, name="sigma_j", constraint=Positive())
+
+        # self.freq = tf.Variable(np.random.uniform(0, self.fs, n_gabors), trainable=True, name="freq")
+        self.freq = tf.Variable(self.freq, trainable=True, name="freq", constraint=Positive())
+
+        # self.theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="theta")
+        self.theta = tf.Variable(self.theta, trainable=True, name="theta")
+
+        # self.rot_theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="rot_theta")
+        self.rot_theta = tf.Variable(self.rot_theta, trainable=True, name="rot_theta")
+
+        # self.sigma_theta = tf.Variable(np.random.uniform(0,6, n_gabors), trainable=True, name="sigma_theta")
+        self.sigma_theta = tf.Variable(self.sigma_theta, trainable=True, name="sigma_theta")
+
+        self.precalc_filters = tf.Variable(create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
+                                                                                  freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs),
+                                           trainable=False, name="precalc_filters")
 
     def _check_parameter_length(self, *args):
         for arg in args:
@@ -170,21 +184,23 @@ class GaborLayer(tf.keras.layers.Layer):
 @patch
 def call(self: GaborLayer, 
          inputs, # Inputs to the layer.
-         training=False, # Wether we are in training or inference.
+         training=False, # Flag indicating if we are training the layer or using it for inference.
          ):
-   """
-   Build a set of filters from the stored values and convolve them with the input.
-   """
-   if training:
-      self.filters = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
-                                                            freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
-      self.precalc_filters.assign(self.filters)
-   else:
-      self.filters = self.precalc_filters
+    """
+    Build a set of filters from the stored values and convolve them with the input.
+    """
+    if training:
+         gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
+                                                           freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
+         self.precalc_filters.assign(gabors)
+    else:
+         gabors = self.precalc_filters
 
-   ## Keras expects the convolutional filters in shape (size_x, size_y, C_in, C_out)
-   gabors = repeat(self.filters, "n_gabors Ncols Nrows -> Ncols Nrows C_in n_gabors", C_in=inputs.shape[-1])
-   return tf.nn.conv2d(inputs, gabors, strides=1, padding="SAME")
+
+    ## Keras expects the convolutional filters in shape (size_x, size_y, C_in, C_out)
+    gabors = repeat(gabors, "n_gabors Ncols Nrows -> Ncols Nrows C_in n_gabors", C_in=inputs.shape[-1])
+    
+    return tf.nn.conv2d(inputs, gabors, strides=1, padding="SAME")
 
 # %% ../Notebooks/00_layers.ipynb 34
 @patch
@@ -194,9 +210,11 @@ def show_filters(self: GaborLayer):
     """
     ncols = int(np.round(np.sqrt(self.n_gabors)))
     nrows = self.n_gabors - ncols
-    gabors = self.filters.numpy()
-    # gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
-    #                                                 freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
+    # gabors = self.filters.numpy()
+    
+    try: gabors = self.precalc_filters.numpy()
+    except: gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
+                                                            freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
     fig, axes = plt.subplots(int(nrows), int(ncols))
     for gabor, ax in zip(gabors, axes.ravel()):
         ax.imshow(gabor)
@@ -243,33 +261,11 @@ class RandomGabor(GaborLayer):
                  **kwargs, # Arguments to be passed to the base `Layer`.
                  ):
         super(GaborLayer, self).__init__(**kwargs) # Hacky way of using tf.keras.layers.Layer __init__ but maintain GaborLayer's methods
-        super(RandomGabor, self)
         self.n_gabors = n_gabors
         self.size = size
         self.Nrows, self.Ncols = size, size
         self.fs = self.Ncols
-        self._initialize_variables()
-        self.filters = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
-                                                               freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
-        self.precalc_filters = tf.Variable(self.filters, trainable=False)
 
-    def build(self,
-              input_shape, # Input shape to the layer.
-              ):
-        self.imean = tf.Variable(0.5, trainable=True, name="imean", constraint=NonNeg())
-        self.jmean = tf.Variable(0.5, trainable=True, name="jmean", constraint=NonNeg())
-        self.sigma_i = tf.Variable(np.random.uniform(0, self.Nrows/self.fs, self.n_gabors), trainable=True, name="sigma_i", constraint=NonNeg())
-        self.sigma_j = tf.Variable(np.random.uniform(0, self.Ncols/self.fs, self.n_gabors), trainable=True, name="sigma_j", constraint=NonNeg())
-        self.freq = tf.Variable(np.random.uniform(0, self.fs, self.n_gabors), trainable=True, name="freq", constraint=NonNeg())
-        self.theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="theta", constraint=NonNeg())
-        self.rot_theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="rot_theta", constraint=NonNeg())
-        self.sigma_theta = tf.Variable(np.random.uniform(0,6, self.n_gabors), trainable=True, name="sigma_theta", constraint=NonNeg())
-    
-    def _initialize_variables(self):
-        """
-        Randomly initializes the variables used by the layer.
-        Needed because we have to postpose initializing the `tf.Variables` until `.build()`
-        """
         self.imean = 0.5
         self.jmean = 0.5
         self.sigma_i = np.random.uniform(0, self.Nrows/self.fs, self.n_gabors)
@@ -278,3 +274,6 @@ class RandomGabor(GaborLayer):
         self.theta = np.random.uniform(0,6, self.n_gabors)
         self.rot_theta = np.random.uniform(0,6, self.n_gabors)
         self.sigma_theta = np.random.uniform(0,6, self.n_gabors)
+
+        super(RandomGabor, self).__init__(self.n_gabors, self.size, self.imean, self.jmean,
+                                          self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta, self.fs)
