@@ -5,6 +5,7 @@ website:
       - 00_layers.ipynb
       - 01_center_surround.ipynb
       - 02_constraints.ipynb
+      - 03_callbacks.ipynb
       - section: Experiments
         contents:
           - Experiments/00_gaborlayer.ipynb

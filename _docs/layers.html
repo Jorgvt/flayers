@@ -194,6 +194,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="./constraints.html" class="sidebar-item-text sidebar-link">Constraints</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./callbacks.html" class="sidebar-item-text sidebar-link">Callbacks</a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Experiments</a>
@@ -313,12 +318,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>&lt;dtype: 'int32'&gt; &lt;dtype: 'float32'&gt;</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-20 12:35:22.979033: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-2022-09-20 12:35:22.979117: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: megatron
-2022-09-20 12:35:22.979137: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: megatron
-2022-09-20 12:35:22.979295: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 470.57.2
-2022-09-20 12:35:22.979361: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 470.57.2
-2022-09-20 12:35:22.979377: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 470.57.2</code></pre>
+<pre><code>2022-09-22 10:36:50.004800: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+2022-09-22 10:36:50.004871: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: megatron
+2022-09-22 10:36:50.004890: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: megatron
+2022-09-22 10:36:50.005005: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 470.57.2
+2022-09-22 10:36:50.005051: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 470.57.2
+2022-09-22 10:36:50.005066: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 470.57.2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -456,7 +461,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>plt.imshow(gabor)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-20 12:35:24.252491: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)</code></pre>
+<pre><code>2022-09-22 10:36:51.315618: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:185] None of the MLIR Optimization Passes are enabled (registered 2)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <p><img src="00_layers_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
@@ -585,9 +590,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, rot_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, sigma_theta<span class="op">=</span>[<span class="dv">0</span>]<span class="op">*</span>n_gabors, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-20 12:35:26.542940: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-20 12:35:26.545272: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-20 12:35:26.547083: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
+<pre><code>2022-09-22 10:36:53.962292: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-22 10:36:53.963533: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-22 10:36:53.964886: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
@@ -615,9 +620,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                                                theta<span class="op">=</span>theta, rot_theta<span class="op">=</span>rot_theta, sigma_theta<span class="op">=</span>sigma_theta, fs<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>gabors.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2022-09-20 12:35:28.025355: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-20 12:35:28.026635: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
-2022-09-20 12:35:28.027776: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
+<pre><code>2022-09-22 10:36:55.606241: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-22 10:36:55.607478: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library
+2022-09-22 10:36:55.608616: W tensorflow/core/framework/op_kernel.cc:1692] OP_REQUIRES failed at functional_ops.cc:374 : Internal: No function library</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <pre><code>TensorShape([4, 20, 20])</code></pre>
@@ -654,7 +659,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># a.filters.shape</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L185" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L187" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="gaborlayer.call" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer.call">GaborLayer.call</h3>
@@ -719,7 +724,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-gabor_layer_1 (GaborLayer)   (None, 28, 28, 4)         1626      
+gabor_layer_2 (GaborLayer)   (None, 28, 28, 4)         1626      
 _________________________________________________________________
 max_pooling2d (MaxPooling2D) (None, 14, 14, 4)         0         
 _________________________________________________________________
@@ -763,7 +768,7 @@ _________________________________________________________________</code></pre>
 </div>
 <p>It can be helpful to implement a method to show the Gabor filters that are being used by the layer:</p>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L207" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L209" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="gaborlayer.show_filters" class="level3">
 <h3 class="anchored" data-anchor-id="gaborlayer.show_filters">GaborLayer.show_filters</h3>
@@ -800,24 +805,24 @@ _________________________________________________________________</code></pre>
 <pre><code>WARNING:tensorflow:6 out of the last 6 calls to &lt;function create_multiple_different_rot_gabor_tf&gt; triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has experimental_relax_shapes=True option that relaxes argument shapes that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=-44429500.0&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=12127090.0&gt;,
+<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=-43654416.0&gt;,
+ &lt;tf.Tensor: shape=(), dtype=float32, numpy=11970161.0&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-4.42353867e+04, -8.19999920e+07, -1.21842125e+05, -1.24557440e+08],
+ array([-4.18656562e+04, -8.09927920e+07, -1.14410117e+05, -1.23048696e+08],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-4.64066523e+04, -8.19875920e+07, -1.24588711e+05, -1.24616856e+08],
+ array([-4.3216855e+04, -8.0995704e+07, -1.1109711e+05, -1.2311187e+08],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-8.8135223e+00, -2.6246947e+05, -1.9752870e+03, -6.3820720e+06],
+ array([-8.3397627e+00, -2.5924567e+05, -1.8548600e+03, -6.3047660e+06],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([ 3.5485029e-02, -9.0675000e+02,  3.3405488e+03, -8.2995800e+05],
+ array([ 1.5471164e+00, -1.0965000e+03,  2.2201016e+03, -8.2523200e+05],
        dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([-3.6406517e-02,  9.0700000e+02, -3.3405557e+03,  8.2996025e+05],
+ array([-1.5463333e+00,  1.0965000e+03, -2.2200566e+03,  8.2523475e+05],
        dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 0.        ,  0.5       ,  0.00097656, -0.5       ], dtype=float32)&gt;]</code></pre>
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 0.        ,  0.5       , -0.00195312, -0.5       ], dtype=float32)&gt;]</code></pre>
 </div>
 </div>
 </section>
@@ -828,7 +833,7 @@ _________________________________________________________________</code></pre>
 <p>Insted of defining ourselves the initial values, we can randomly initialize them. This can speed up our testing.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L225" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L227" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="create_simple_random_set" class="level3">
 <h3 class="anchored" data-anchor-id="create_simple_random_set">create_simple_random_set</h3>
 <blockquote class="blockquote">
@@ -877,7 +882,7 @@ _________________________________________________________________</code></pre>
 <p>Actually, we can define a different layer that initializes almost all of its parameters randomly by inhereting from <a href="https://Jorgvt.github.io/flayers/layers.html#gaborlayer"><code>GaborLayer</code></a>.</p>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L254" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Jorgvt/flayers/blob/master/flayers/layers.py#L256" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="randomgabor-1" class="level3">
 <h3 class="anchored" data-anchor-id="randomgabor-1">RandomGabor</h3>
 <blockquote class="blockquote">
@@ -904,7 +909,7 @@ _________________________________________________________________</code></pre>
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
-random_gabor_4 (RandomGabor) (None, 28, 28, 4)         1626      
+random_gabor_3 (RandomGabor) (None, 28, 28, 4)         1626      
 _________________________________________________________________
 max_pooling2d_1 (MaxPooling2 (None, 14, 14, 4)         0         
 _________________________________________________________________
@@ -955,18 +960,18 @@ _________________________________________________________________</code></pre>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>gradients <span class="op">=</span> tape.gradient(loss, gaborlayer.trainable_variables)</span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>gradients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=113917.734&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=-917516.5&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ -5164.865 , 450326.28  ,  -3239.7764, -39325.453 ], dtype=float32)&gt;,
+<pre><code>[&lt;tf.Tensor: shape=(), dtype=float32, numpy=-14807149.0&gt;,
+ &lt;tf.Tensor: shape=(), dtype=float32, numpy=310030.06&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([-10065.641, -68741.8  ,  -8747.457, -81285.984], dtype=float32)&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([-17256.184, -22176.14 , -55413.055, -26464.76 ], dtype=float32)&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([  7505.675, -50937.2  ,  -7013.109,  12654.501], dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([   83248.89 , -2121896.2  ,  -437151.2  ,   -11192.807],
+ array([   43336.797, -1755171.4  ,    85998.625, -1342648.1  ],
        dtype=float32)&gt;,
+ &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ -43530.617, 1856712.   ,  -82486.6  , 1354445.6  ], dtype=float32)&gt;,
  &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=
- array([ 1.4903282e+03,  2.7136692e+06,  7.4021333e+03, -2.4694915e+03],
-       dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([-172227.47 ,  150331.88 , -100282.945,  168037.84 ], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 149537.19,  -77730.22,  114461.95, -163637.2 ], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=float32, numpy=array([ 22690.408, -72601.56 , -14178.506,  -4400.712], dtype=float32)&gt;]</code></pre>
+ array([    193.8518, -101540.625 ,   -3512.0667,  -11797.089 ],
+       dtype=float32)&gt;]</code></pre>
 </div>
 </div>
 

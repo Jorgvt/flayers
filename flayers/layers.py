@@ -133,7 +133,8 @@ class GaborLayer(tf.keras.layers.Layer):
                  theta: list, # Rotation of the sinusoid **(rad)**.
                  rot_theta: list, # Rotation of the domain **(rad)**.
                  sigma_theta: list, # Rotation of the envelope  **(rad)**.
-                 fs, # Sampling frequency.
+                 fs, # Sampling frequency.,
+                 normalize: bool = True, # Wether to normalize the Gabor filters or not.
                  **kwargs, # Arguments to be passed to the base `Layer`.
                  ):
         super(GaborLayer, self).__init__(**kwargs)
@@ -144,6 +145,7 @@ class GaborLayer(tf.keras.layers.Layer):
         self.size = size
         self.Nrows, self.Ncols = size, size
         self.fs = fs
+        self.normalize = normalize
 
         self._check_parameter_length(sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
         self.imean, self.jmean, self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta = cast_all(imean, jmean, sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
@@ -172,7 +174,7 @@ class GaborLayer(tf.keras.layers.Layer):
         self.sigma_theta = tf.Variable(self.sigma_theta, trainable=True, name="sigma_theta")
 
         self.precalc_filters = tf.Variable(create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
-                                                                                  freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs),
+                                                                                  freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs, normalize=self.normalize),
                                            trainable=False, name="precalc_filters")
 
     def _check_parameter_length(self, *args):
@@ -191,7 +193,7 @@ def call(self: GaborLayer,
     """
     if training:
          gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
-                                                           freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
+                                                           freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs, normalize=self.normalize)
          self.precalc_filters.assign(gabors)
     else:
          gabors = self.precalc_filters
@@ -214,7 +216,7 @@ def show_filters(self: GaborLayer):
     
     try: gabors = self.precalc_filters.numpy()
     except: gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
-                                                            freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs)
+                                                            freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs, normalize=self.normalize)
     fig, axes = plt.subplots(int(nrows), int(ncols))
     for gabor, ax in zip(gabors, axes.ravel()):
         ax.imshow(gabor)
@@ -256,15 +258,17 @@ class RandomGabor(GaborLayer):
     Randomly initialized Gabor layer that is trainable through backpropagation.
     """
     def __init__(self,
-                 n_gabors, # Number of Gabor filters
-                 size, # Size of the filters (they will be square)
+                 n_gabors, # Number of Gabor filters.
+                 size, # Size of the filters (they will be square).
+                 normalize: bool = True, # Wether to normalize the Gabor filters.
                  **kwargs, # Arguments to be passed to the base `Layer`.
                  ):
-        super(GaborLayer, self).__init__(**kwargs) # Hacky way of using tf.keras.layers.Layer __init__ but maintain GaborLayer's methods
+        super(GaborLayer, self).__init__(**kwargs) # Hacky way of using tf.keras.layers.Layer __init__ but maintain GaborLayer's methods.
         self.n_gabors = n_gabors
         self.size = size
         self.Nrows, self.Ncols = size, size
         self.fs = self.Ncols
+        self.normalize = normalize
 
         self.imean = 0.5
         self.jmean = 0.5
@@ -276,4 +280,4 @@ class RandomGabor(GaborLayer):
         self.sigma_theta = np.random.uniform(0,6, self.n_gabors)
 
         super(RandomGabor, self).__init__(self.n_gabors, self.size, self.imean, self.jmean,
-                                          self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta, self.fs)
+                                          self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta, self.fs, self.normalize)

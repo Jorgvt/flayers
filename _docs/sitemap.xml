@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://Jorgvt.github.io/flayers/index.html</loc>
-    <lastmod>2022-09-20T10:50:58.978Z</lastmod>
+    <lastmod>2022-09-22T08:44:26.458Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/center_surround.html</loc>
-    <lastmod>2022-09-20T10:50:59.562Z</lastmod>
+    <lastmod>2022-09-22T08:44:27.138Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Jorgvt.github.io/flayers/callbacks.html</loc>
+    <lastmod>2022-09-22T08:44:28.018Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/constraints.html</loc>
-    <lastmod>2022-09-20T10:51:00.102Z</lastmod>
+    <lastmod>2022-09-22T08:44:28.666Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/Experiments/03_multiple_randomgabor.html</loc>
-    <lastmod>2022-09-20T10:51:00.758Z</lastmod>
+    <lastmod>2022-09-22T08:44:29.362Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/Experiments/01_randomgabor.html</loc>
-    <lastmod>2022-09-20T10:51:01.350Z</lastmod>
+    <lastmod>2022-09-22T08:44:29.998Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/Experiments/00_gaborlayer.html</loc>
-    <lastmod>2022-09-20T10:51:02.078Z</lastmod>
+    <lastmod>2022-09-22T08:44:30.614Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/Experiments/05_multiple_randomgabor_relu.html</loc>
-    <lastmod>2022-09-20T10:51:02.770Z</lastmod>
+    <lastmod>2022-09-22T08:44:31.230Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/Experiments/04_multiple_gaborlayer_relu.html</loc>
-    <lastmod>2022-09-20T10:51:03.526Z</lastmod>
+    <lastmod>2022-09-22T08:44:32.027Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/Experiments/02_multiple_gaborlayer.html</loc>
-    <lastmod>2022-09-20T10:51:04.258Z</lastmod>
+    <lastmod>2022-09-22T08:44:32.907Z</lastmod>
   </url>
   <url>
     <loc>https://Jorgvt.github.io/flayers/layers.html</loc>
-    <lastmod>2022-09-20T10:51:05.406Z</lastmod>
+    <lastmod>2022-09-22T08:44:33.931Z</lastmod>
   </url>
 </urlset>
