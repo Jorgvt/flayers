@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "flayers"
+  site-url: "https://Jorgvt.github.io/flayers"
+  description: "Functional layers ready to be trained with backpropagation."
+  repo-branch: master
+  repo-url: "https://github.com/Jorgvt/flayers"

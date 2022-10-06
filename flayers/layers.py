@@ -33,6 +33,7 @@ def gabor_2d_tf(i, # Horizontal domain
                 ):
     i, j, imean, jmean, sigma_i, sigma_j, freq, theta, sigma_theta, PI = cast_all(i, j, imean, jmean, sigma_i, sigma_j, freq, theta, sigma_theta, np.pi)
     sigma_vector = tf.convert_to_tensor([sigma_i, sigma_j])
+    # sigma_vector = tf.clip_by_value(sigma_vector, clip_value_min=1e-5, clip_value_max=200)
     cov_matrix = tf.linalg.diag(sigma_vector)**2
     det_cov_matrix = tf.linalg.det(cov_matrix)
     constant = tf.convert_to_tensor((1/(2*PI*tf.sqrt(det_cov_matrix))))
@@ -49,7 +50,7 @@ def gabor_2d_tf(i, # Horizontal domain
 
     return gabor
 
-# %% ../Notebooks/00_layers.ipynb 14
+# %% ../Notebooks/00_layers.ipynb 25
 @tf.function
 def create_gabor_rot_tf(Nrows, # Number of horizontal pixels
                         Ncols, # Number of vertical pixels
@@ -82,7 +83,7 @@ def create_gabor_rot_tf(Nrows, # Number of horizontal pixels
 
     return gabor_2d_tf(x_r, y_r, imean = imean, jmean = jmean, sigma_i = sigma_i, sigma_j = sigma_j, freq = freq, theta = theta, sigma_theta = sigma_theta)
 
-# %% ../Notebooks/00_layers.ipynb 18
+# %% ../Notebooks/00_layers.ipynb 29
 @tf.function
 def create_multiple_different_rot_gabor_tf(n_gabors, # Number of Gabor filters we want to create.
                                            Nrows, # Number of horizontal pixels.
@@ -117,7 +118,7 @@ def create_multiple_different_rot_gabor_tf(n_gabors, # Number of Gabor filters w
         gabors = gabors/(max_per_gabor*tf.cast(n_gabors, tf.float32))
     return gabors
 
-# %% ../Notebooks/00_layers.ipynb 26
+# %% ../Notebooks/00_layers.ipynb 37
 class GaborLayer(tf.keras.layers.Layer):
     """
     Pre-initialized Gabor layer that is trainable through backpropagation.
@@ -149,6 +150,7 @@ class GaborLayer(tf.keras.layers.Layer):
 
         self._check_parameter_length(sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
         self.imean, self.jmean, self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta = cast_all(imean, jmean, sigma_i, sigma_j, freq, theta, rot_theta, sigma_theta)
+        self.logsigma_i, self.logsigma_j = tf.math.log(self.sigma_i), tf.math.log(self.sigma_j)
         
     def build(self, input_shape):
 
@@ -156,10 +158,10 @@ class GaborLayer(tf.keras.layers.Layer):
         self.jmean = tf.Variable(self.jmean, trainable=True, name="jmean", constraint=Positive())
 
         # self.sigma_i = tf.Variable(np.random.uniform(0, self.Nrows/self.fs, n_gabors), trainable=True, name="sigma_i")
-        self.sigma_i = tf.Variable(self.sigma_i, trainable=True, name="sigma_i", constraint=Positive())
+        self.logsigma_i = tf.Variable(self.logsigma_i, trainable=True, name="logsigma_i")#, constraint=Positive())
 
         # self.sigma_j = tf.Variable(np.random.uniform(0, self.Ncols/self.fs, n_gabors), trainable=True, name="sigma_j")
-        self.sigma_j = tf.Variable(self.sigma_j, trainable=True, name="sigma_j", constraint=Positive())
+        self.logsigma_j = tf.Variable(self.logsigma_j, trainable=True, name="logsigma_j")#, constraint=Positive())
 
         # self.freq = tf.Variable(np.random.uniform(0, self.fs, n_gabors), trainable=True, name="freq")
         self.freq = tf.Variable(self.freq, trainable=True, name="freq", constraint=Positive())
@@ -182,7 +184,7 @@ class GaborLayer(tf.keras.layers.Layer):
             if len(arg) != self.n_gabors: raise ValueError(f"Listed parameters should have the same length as n_gabors ({self.n_gabors}).")
 
 
-# %% ../Notebooks/00_layers.ipynb 28
+# %% ../Notebooks/00_layers.ipynb 39
 @patch
 def call(self: GaborLayer, 
          inputs, # Inputs to the layer.
@@ -192,7 +194,7 @@ def call(self: GaborLayer,
     Build a set of filters from the stored values and convolve them with the input.
     """
     if training:
-         gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
+         gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=tf.math.exp(self.logsigma_i), sigma_j=tf.math.exp(self.logsigma_j),
                                                            freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs, normalize=self.normalize)
          self.precalc_filters.assign(gabors)
     else:
@@ -204,9 +206,11 @@ def call(self: GaborLayer,
     
     return tf.nn.conv2d(inputs, gabors, strides=1, padding="SAME")
 
-# %% ../Notebooks/00_layers.ipynb 34
+# %% ../Notebooks/00_layers.ipynb 45
 @patch
-def show_filters(self: GaborLayer):
+def show_filters(self: GaborLayer,
+                 show: bool = True, # Wether to run plt.plot() or not.
+                 ):
     """
     Calculates and plots the filters corresponding to the stored parameters.
     """
@@ -215,14 +219,14 @@ def show_filters(self: GaborLayer):
     # gabors = self.filters.numpy()
     
     try: gabors = self.precalc_filters.numpy()
-    except: gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=self.sigma_i, sigma_j=self.sigma_j,
+    except: gabors = create_multiple_different_rot_gabor_tf(n_gabors=self.n_gabors, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=tf.math.exp(self.logsigma_i), sigma_j=tf.math.exp(self.logsigma_j),
                                                             freq=self.freq, theta=self.theta, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs, normalize=self.normalize)
     fig, axes = plt.subplots(int(nrows), int(ncols))
     for gabor, ax in zip(gabors, axes.ravel()):
         ax.imshow(gabor)
-    plt.show()
+    if show: plt.show()
 
-# %% ../Notebooks/00_layers.ipynb 40
+# %% ../Notebooks/00_layers.ipynb 51
 @tf.function
 def create_simple_random_set(n_gabors, # Number of Gabor filters we want to create.
                              size, # Size of the Gabor (they will be square).
@@ -252,7 +256,7 @@ def create_simple_random_set(n_gabors, # Number of Gabor filters we want to crea
     # gabors = tf.transpose(gabors, perm = [1,2,3,0])
     return gabors
 
-# %% ../Notebooks/00_layers.ipynb 44
+# %% ../Notebooks/00_layers.ipynb 55
 class RandomGabor(GaborLayer):
     """
     Randomly initialized Gabor layer that is trainable through backpropagation.
