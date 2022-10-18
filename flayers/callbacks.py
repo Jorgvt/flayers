@@ -57,6 +57,7 @@ class FunctionalFilterLogger(Callback):
             if hasattr(layer, "show_filters"):
                 layer.show_filters(show=False)
                 wandb.log({f'{layer.name}': wandb.Image(plt)})
+                plt.close()
 
 # %% ../Notebooks/03_callbacks.ipynb 19
 class GaborFiltersLogger(Callback):
