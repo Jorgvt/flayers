@@ -160,4 +160,4 @@ class BatchesSeenLogger(Callback):
                      logs=None, # Dictionary containing metrics and information of the training.
                      ):
         """Logs the number of batches seen into wandb."""
-        wandb.log({"Batches": self.batches_seen})
+        wandb.log({"Batches": self.batches_seen}, step=self.batches_seen)
