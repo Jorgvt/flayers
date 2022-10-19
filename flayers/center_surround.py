@@ -216,7 +216,7 @@ def show_filters(self: GaussianLayer,
     try: gabors = self.precalc_filters.numpy()
     except: gabors = create_multiple_different_rot_gaussian_tf(filters=self.filters, Nrows=self.Nrows, Ncols=self.Ncols, imean=self.imean, jmean=self.jmean, sigma_i=tf.math.exp(self.logsigma_i), sigma_j=tf.math.exp(self.logsigma_j),
                                                                freq=self.freq, rot_theta=self.rot_theta, sigma_theta=self.sigma_theta, fs=self.fs, normalize=self.normalize)
-    fig, axes = plt.subplots(int(nrows), int(ncols))
+    fig, axes = plt.subplots(int(nrows), int(ncols), squeeze=False)
     for gabor, ax in zip(gabors, axes.ravel()):
         ax.imshow(gabor)
     if show: plt.show()
