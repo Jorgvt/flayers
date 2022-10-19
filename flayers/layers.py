@@ -207,6 +207,13 @@ def call(self: GaborLayer,
     return tf.nn.conv2d(inputs, gabors, strides=1, padding="SAME")
 
 # %% ../Notebooks/00_layers.ipynb 45
+def find_grid_size(filters):
+    ncols = int(np.round(np.sqrt(filters)))
+    nrows = ncols
+    if ncols*nrows < filters: nrows += 1
+    return nrows, ncols
+
+# %% ../Notebooks/00_layers.ipynb 46
 @patch
 def show_filters(self: GaborLayer,
                  show: bool = True, # Wether to run plt.plot() or not.
@@ -214,8 +221,7 @@ def show_filters(self: GaborLayer,
     """
     Calculates and plots the filters corresponding to the stored parameters.
     """
-    ncols = int(np.round(np.sqrt(self.n_gabors)))
-    nrows = self.n_gabors - ncols
+    nrows, ncols = find_grid_size(self.n_gabors)
     # gabors = self.filters.numpy()
     
     try: gabors = self.precalc_filters.numpy()
@@ -226,7 +232,7 @@ def show_filters(self: GaborLayer,
         ax.imshow(gabor)
     if show: plt.show()
 
-# %% ../Notebooks/00_layers.ipynb 51
+# %% ../Notebooks/00_layers.ipynb 52
 @tf.function
 def create_simple_random_set(n_gabors, # Number of Gabor filters we want to create.
                              size, # Size of the Gabor (they will be square).
@@ -256,7 +262,7 @@ def create_simple_random_set(n_gabors, # Number of Gabor filters we want to crea
     # gabors = tf.transpose(gabors, perm = [1,2,3,0])
     return gabors
 
-# %% ../Notebooks/00_layers.ipynb 55
+# %% ../Notebooks/00_layers.ipynb 56
 class RandomGabor(GaborLayer):
     """
     Randomly initialized Gabor layer that is trainable through backpropagation.

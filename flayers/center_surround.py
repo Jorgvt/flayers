@@ -196,6 +196,13 @@ def call(self: GaussianLayer,
     return tf.nn.conv2d(inputs, gaussians, strides=1, padding="SAME")
 
 # %% ../Notebooks/01_center_surround.ipynb 22
+def find_grid_size(filters):
+    ncols = int(np.round(np.sqrt(filters)))
+    nrows = ncols
+    if ncols*nrows < filters: nrows += 1
+    return nrows, ncols
+
+# %% ../Notebooks/01_center_surround.ipynb 23
 @patch
 def show_filters(self: GaussianLayer,
                  show: bool = True, # Wether to run plt.plot() or not.
@@ -203,8 +210,7 @@ def show_filters(self: GaussianLayer,
     """
     Calculates and plots the filters corresponding to the stored parameters.
     """
-    ncols = int(np.round(np.sqrt(self.filters)))
-    nrows = self.filters - ncols
+    nrows, ncols = find_grid_size(self.filters)
     # gabors = self.filters.numpy()
     
     try: gabors = self.precalc_filters.numpy()
@@ -215,7 +221,7 @@ def show_filters(self: GaussianLayer,
         ax.imshow(gabor)
     if show: plt.show()
 
-# %% ../Notebooks/01_center_surround.ipynb 27
+# %% ../Notebooks/01_center_surround.ipynb 28
 class RandomGaussian(GaussianLayer):
     """
     Randomly initialized Gaussian layer that is trainable through backpropagation.

@@ -45,21 +45,41 @@ class GaborLayerSeqLogger(Callback):
                     wandb.log({f'{layer.name}.{weight.name}': wandb.Histogram(weight)})
 
 # %% ../Notebooks/03_callbacks.ipynb 9
+def log_show_filters(layer, # Layer to log functional filters from.
+                     ):
+    """Logs a functional layer filters into wandb if only there is a `show_filters` method available."""
+    if hasattr(layer, "show_filters"):
+        layer.show_filters(show=False)
+        wandb.log({f'{layer.name}': wandb.Image(plt)})
+        plt.close()
+
+# %% ../Notebooks/03_callbacks.ipynb 10
 class FunctionalFilterLogger(Callback):
     """Logs the parametrics filters of any layer implementing a `show_filters` method."""
     
-    def on_train_batch_end(self, 
-                           batch, # Batch number.
-                           logs=None, # Dictionary containing metrics and information of the training.
-                           ):
-        """Logs the parametric filters after each batch (after each parameter update)."""
+    def on_train_begin(self, 
+                       logs=None, # Dictionary containing metrics and information of the training.
+                       ):
+        """Logs the parametric filters at the beggining of the training."""
         for layer in self.model.layers:
-            if hasattr(layer, "show_filters"):
-                layer.show_filters(show=False)
-                wandb.log({f'{layer.name}': wandb.Image(plt)})
-                plt.close()
+            log_show_filters(layer)
 
-# %% ../Notebooks/03_callbacks.ipynb 19
+    def on_epoch_end(self, 
+                     epoch, # Epoch number.
+                     logs=None, # Dictionary containing metrics and information of the training.
+                     ):
+        """Logs the parametric filters after each epoch."""
+        for layer in self.model.layers:
+            log_show_filters(layer)
+
+    def on_train_end(self, 
+                       logs=None, # Dictionary containing metrics and information of the training.
+                       ):
+        """Logs the parametric filters at the end of the training."""
+        for layer in self.model.layers:
+            log_show_filters(layer)
+
+# %% ../Notebooks/03_callbacks.ipynb 20
 class GaborFiltersLogger(Callback):
     import wandb
 
@@ -81,7 +101,7 @@ class GaborFiltersLogger(Callback):
                     wandb.log({"gabors": plt})
                     plt.close()
 
-# %% ../Notebooks/03_callbacks.ipynb 27
+# %% ../Notebooks/03_callbacks.ipynb 28
 class GaborErrorPrinter(Callback):
     import wandb
 
@@ -104,7 +124,7 @@ class GaborErrorPrinter(Callback):
                     for name, value in attrs.items():
                         print(f"{name}: {value}")
 
-# %% ../Notebooks/03_callbacks.ipynb 31
+# %% ../Notebooks/03_callbacks.ipynb 32
 class BatchesSeenLogger(Callback):
     """Logs the number of batches seen by the model."""
 
