@@ -2,7 +2,7 @@
 
 # %% auto 0
 __all__ = ['gabor_2d_tf', 'create_gabor_rot_tf', 'create_multiple_different_rot_gabor_tf', 'GaborLayer',
-           'create_simple_random_set', 'RandomGabor']
+           'create_simple_random_set', 'RandomGabor', 'PseudoRandomGabor']
 
 # %% ../Notebooks/00_layers.ipynb 5
 import numpy as np
@@ -291,3 +291,37 @@ class RandomGabor(GaborLayer):
 
         super(RandomGabor, self).__init__(self.n_gabors, self.size, self.imean, self.jmean,
                                           self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta, self.fs, self.normalize)
+
+# %% ../Notebooks/00_layers.ipynb 67
+class PseudoRandomGabor(GaborLayer):
+    """
+    Randomly initialized Gabor layer that is trainable through backpropagation.
+    """
+    def __init__(self,
+                 n_gabors, # Number of Gabor filters.
+                 size, # Size of the filters (they will be square).
+                 normalize: bool = True, # Wether to normalize the Gabor filters.
+                 **kwargs, # Arguments to be passed to the base `Layer`.
+                 ):
+        super(GaborLayer, self).__init__(**kwargs) # Hacky way of using tf.keras.layers.Layer __init__ but maintain GaborLayer's methods.
+        self.n_gabors = n_gabors
+        self.size = size
+        self.Nrows, self.Ncols = size, size
+        self.fs = self.Ncols
+        self.normalize = normalize
+
+        self.imean = 0.5
+        self.jmean = 0.5
+        self.freq = np.random.uniform(0, self.fs/2, self.n_gabors)
+        # self.sigma_i = np.random.uniform(0, self.Nrows/self.fs, self.n_gabors)
+        # self.sigma_j = np.random.uniform(0, self.Ncols/self.fs, self.n_gabors)
+        
+        self.sigma_i = 2/self.freq
+        self.sigma_j = 2/self.freq
+
+        self.theta = np.random.uniform(0,6, self.n_gabors)
+        self.rot_theta = np.random.uniform(0,6, self.n_gabors)
+        self.sigma_theta = np.random.uniform(0,6, self.n_gabors)
+
+        super(PseudoRandomGabor, self).__init__(self.n_gabors, self.size, self.imean, self.jmean,
+                                                self.sigma_i, self.sigma_j, self.freq, self.theta, self.rot_theta, self.sigma_theta, self.fs, self.normalize)
