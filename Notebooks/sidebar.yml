@@ -7,6 +7,11 @@ website:
       - 01b_center_surround2.ipynb
       - 02_constraints.ipynb
       - 03_callbacks.ipynb
+      - section: Experimental
+        contents:
+          - Experimental/00_simple_gaussian.ipynb
+          - Experimental/01_basic_functional_layer.ipynb
+          - Experimental/Untitled.ipynb
       - section: Experiments
         contents:
           - section: Gabor
