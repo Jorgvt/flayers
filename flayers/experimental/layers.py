@@ -19,7 +19,9 @@ class FunctionalLayer(layers.Conv2D):
                  **kwargs, # Keyword arguments to be passed to the base `Conv2D` layer.
                  ) -> None:
         super(FunctionalLayer, self).__init__(**kwargs)
-    
+        self.training = True
+        self.has_to_generate = True
+
     def build(self,
               input_shape,
               ):
@@ -33,16 +35,37 @@ class FunctionalLayer(layers.Conv2D):
                                                      )
         else:
             self.bias = None
-        self.kernels_depth = input_shape[-1] // self.groups
+        # self.kernels_depth = input_shape[-1] // self.groups
+        self.inp_shape = input_shape
+        try: self.precalc_filters = tf.Variable(self.generate_kernel(),
+                                                trainable=False, name="precalc_filters")
+        except (NotImplementedError, AttributeError): pass
     
     @property
+    def kernels_depth(self): return self.inp_shape[-1] // self.groups
+
+    @property
     def kernel(self):
-        return self.generate_kernel()
+        if self.training: return self.generate_kernel()
+        else: 
+            if self.has_to_generate:
+                krnl = self.generate_kernel()
+                self.precalc_filters.assign(krnl)
+                self.has_to_generate = False
+            return self.precalc_filters
     
     def generate_kernel(self):
-        """Generates the functional kernel. Should be overrided. Must return them in shape (Kx, Ky, Cin//groups, Cout"""
+        """Generates the functional kernel. Should be overrided. Must return them in shape (Kx, Ky, Cin//groups, Cout)"""
         raise NotImplementedError("Must implement a function to generate the functional kernel.")
     
+    def call(self,
+             inputs, # Inputs to the layer.
+             training=None, # Tell the layer if the kernel has to be calculated again (training) or can be re-used (inference).
+             ):
+        """We overrode it to store the training variable."""
+        self.training = training
+        return super(FunctionalLayer, self).call(inputs)
+
     def show_filters(self,
                      show=True, # If we want to execute `plt.show()` or not.
                      **kwargs, # Key-word arguments to be pased to `plt.subplots`.
@@ -56,7 +79,7 @@ class FunctionalLayer(layers.Conv2D):
                 axes[i,j].axis("off")
         if show: plt.show()
 
-# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 8
+# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 9
 class GaussianLayer(FunctionalLayer):
     """Functional layer with gaussian kernels."""
 
@@ -76,7 +99,7 @@ class GaussianLayer(FunctionalLayer):
     
     @tf.function
     def generate_kernel(self):
-        """Generates a gaussian kernel based on the parameter sigma."""
+        """Generates a gaussian kernel based on the stored parameters."""
         gaussians = tf.TensorArray(dtype=tf.float32, size=self.sigma.shape[0])
         x, y = self.generate_dominion()
         for n in tf.range(start=0, limit=self.sigma.shape[0], delta=1, dtype=tf.int32):
@@ -108,7 +131,7 @@ class GaussianLayer(FunctionalLayer):
         range_y = tf.range(start=0, limit=self.kernel_size[1], delta=1, dtype=tf.float32)
         return tf.meshgrid(range_x, range_y)        
 
-# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 19
+# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 23
 class GaborLayer(FunctionalLayer):
     """Functional layer with gabor kernels."""
 
@@ -228,7 +251,7 @@ class GaborLayer(FunctionalLayer):
         range_y = tf.linspace(start=0.0, stop=self.kernel_size[1]/self.fs, num=self.kernel_size[1]+1)[:-1]
         return tf.meshgrid(range_x, range_y)        
 
-# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 25
+# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 33
 class PreInitGaborLayer(GaborLayer):
     """Pre-initialized `GaborLayer`."""
 
@@ -258,7 +281,7 @@ class PreInitGaborLayer(GaborLayer):
     def build(self,
               input_shape,
               ):
-        super(GaborLayer, self).build(input_shape)
+        super(PreInitGaborLayer, self).build(input_shape)
         self.xmean = tf.Variable(self.xmean, trainable=False, dtype=tf.float32, name="xmean")
         self.ymean = tf.Variable(self.ymean, trainable=False, dtype=tf.float32, name="ymean")
         self.logsigmax = tf.Variable(self.logsigmax, trainable=True, dtype=tf.float32, name="logsigmax")
@@ -270,7 +293,7 @@ class PreInitGaborLayer(GaborLayer):
         self.fs = tf.Variable(self.fs, trainable=True, dtype=tf.float32, name="fs")
         self.A = tf.Variable(tf.ones(shape=(self.kernels_depth*self.filters,)), trainable=True, name="A", dtype=tf.float32)
 
-# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 29
+# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 37
 class CenterSurroundLayer(GaussianLayer):
     """Center surround layer."""
 
@@ -298,7 +321,7 @@ class CenterSurroundLayer(GaussianLayer):
         gaussians = rearrange(gaussians, "(Cin_groups Cout) Kx Ky -> Kx Ky Cin_groups Cout", Cin_groups=self.kernels_depth)
         return gaussians
 
-# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 32
+# %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 40
 class EnergyConserver(layers.Layer):
     """Preserves the energy at the input and output of a layer."""
     
