@@ -46,7 +46,9 @@ class FunctionalLayer(layers.Conv2D):
 
     @property
     def kernel(self):
-        if self.training: return self.generate_kernel()
+        if self.training: 
+            self.has_to_generate = True
+            return self.generate_kernel()
         else: 
             if self.has_to_generate:
                 krnl = self.generate_kernel()
