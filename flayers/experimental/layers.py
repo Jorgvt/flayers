@@ -25,6 +25,8 @@ class FunctionalLayer(layers.Conv2D):
     def build(self,
               input_shape,
               ):
+        if isinstance(input_shape, tuple): input_shape = tf.TensorShape(input_shape)
+        input_channels = self._get_input_channel(input_shape)
         if self.use_bias: self.bias = self.add_weight(name="bias",
                                                       shape=(self.filters,),
                                                       initializer=self.bias_initializer,
@@ -35,14 +37,11 @@ class FunctionalLayer(layers.Conv2D):
                                                      )
         else:
             self.bias = None
-        # self.kernels_depth = input_shape[-1] // self.groups
-        self.inp_shape = input_shape
-        try: self.precalc_filters = tf.Variable(self.generate_kernel(),
-                                                trainable=False, name="precalc_filters")
-        except (NotImplementedError, AttributeError): pass
-    
-    @property
-    def kernels_depth(self): return self.inp_shape[-1] // self.groups
+        self.kernels_depth = input_shape[-1] // self.groups
+        self.precalc_filters = tf.Variable(tf.zeros(shape=(*self.kernel_size, input_channels, self.filters)),
+                                           trainable=False, name="precalc_filters",
+                                        #    shape=tf.TensorShape(()),
+                                           )    
 
     @property
     def kernel(self):
@@ -97,8 +96,8 @@ class GaussianLayer(FunctionalLayer):
                                  name="sigma")
         self.A = tf.Variable(tf.ones(shape=(self.kernels_depth*self.filters,)), trainable=True, name="A", dtype=tf.float32)
         self.xmean = tf.Variable(self.kernel_size[0]/2, trainable=False, name="xmean", dtype=tf.float32)
-        self.ymean = tf.Variable(self.kernel_size[1]/2, trainable=False, name="ymean", dtype=tf.float32)
-    
+        self.ymean = tf.Variable(self.kernel_size[1]/2, trainable=False, name="ymean", dtype=tf.float32)    
+        
     @tf.function
     def generate_kernel(self):
         """Generates a gaussian kernel based on the stored parameters."""
