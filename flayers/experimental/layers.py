@@ -38,6 +38,7 @@ class FunctionalLayer(layers.Conv2D):
         else:
             self.bias = None
         self.kernels_depth = input_channels // self.groups
+        if self.kernels_depth == 0: self.kernels_depth = 1
         self.precalc_filters = tf.Variable(tf.zeros(shape=(*self.kernel_size, self.kernels_depth, self.filters)),
                                            trainable=False, name="precalc_filters",
                                         #    shape=tf.TensorShape(()),
