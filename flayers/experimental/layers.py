@@ -38,7 +38,6 @@ class FunctionalLayer(layers.Conv2D):
         else:
             self.bias = None
         self.kernels_depth = input_channels // self.groups
-        if self.kernels_depth == 0: self.kernels_depth = 1
         self.precalc_filters = tf.Variable(tf.zeros(shape=(*self.kernel_size, self.kernels_depth, self.filters)),
                                            trainable=False, name="precalc_filters",
                                         #    shape=tf.TensorShape(()),
@@ -129,8 +128,8 @@ class GaussianLayer(FunctionalLayer):
     def generate_dominion(self,
                           ): # Returns two tensors, X and Y, to be passed into `gaussian`.
         """Generates the 2D dominion over which we want to calculate the gaussian."""
-        range_x = tf.range(start=0, limit=self.kernel_size[0], delta=1, dtype=tf.float32)
-        range_y = tf.range(start=0, limit=self.kernel_size[1], delta=1, dtype=tf.float32)
+        range_x = tf.linspace(start=0.0, stop=self.kernel_size[0]/self.fs, num=self.kernel_size[0]+1)[:-1]
+        range_y = tf.linspace(start=0.0, stop=self.kernel_size[1]/self.fs, num=self.kernel_size[1]+1)[:-1]
         return tf.meshgrid(range_x, range_y)        
 
 # %% ../../Notebooks/Experimental/01_basic_functional_layer.ipynb 23
